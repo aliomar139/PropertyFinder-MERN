@@ -1,0 +1,191 @@
+/* scoped */
+/* Full-page background */
+.page-welcome #backgroundContainer {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  z-index: -1; /* Ensure it stays behind the content */
+}
+
+@font-face {
+  font-family: 'Carattere';
+  src: url('/KumarOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Background image (Apartment with blur effect) */
+.page-welcome #backgroundContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/pictures/apartment.jpeg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Welcome Text */
+.page-welcome #welcomeText {
+  position: absolute;
+  top: 45%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+  color: white;
+  font-family: Arial, sans-serif;
+  z-index: 2;
+  max-width: 800px;
+  white-space: nowrap;
+}
+
+/* Font for Logo */
+.page-welcome .logo {
+  font-family: 'Carattere', sans-serif;
+  color: #ffffff;
+  font-size: 40px;
+}
+
+/* Big title */
+.page-welcome #welcomeText h1 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+.page-welcome .yellow {
+  color: #ffd700;
+}
+
+/* Background image (Hall with door) */
+.page-welcome .background-door {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Overlay door (Clickable to reveal buttons) */
+.page-welcome .overlay-door {
+  position: absolute;
+  width: 19vw;  /* Adjusted for responsiveness */
+  max-width: 340px; /* Prevents it from being too large on big screens */
+  height: auto;
+  cursor: pointer;
+  z-index: 2;
+  transition: opacity 0.1s ease-in-out, transform 0.3s ease;
+  
+  /* Positioning the overlay door correctly */
+  top: 55%;
+  left: 32.5%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover effect to make the door slightly bigger */
+.page-welcome .overlay-door:hover {
+  transform: translate(-50%, -50%) scale(1.02);
+}
+
+/* Login Screenshot (Initially Hidden) */
+.page-welcome #loginScreenshot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Hide elements with fade effect */
+.page-welcome .fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Buttons */
+.page-welcome button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+/* Button Hover Effects */
+.page-welcome button:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translate(-50%, -55%);
+  }
+  to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .page-welcome #welcomeText {
+    left: 60%; /* Adjust text placement */
+    font-size: 20px;
+  }
+  
+  .page-welcome .overlay-door {
+    width: 20vw; /* Increase size slightly on smaller screens */
+    top: 55%;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-welcome #welcomeText {
+    left: 50%;
+    text-align: center;
+    font-size: 18px;
+  }
+  
+  .page-welcome .overlay-door {
+    width: 25vw;
+    top: 58%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-welcome #welcomeText {
+    font-size: 16px;
+  }
+
+  .page-welcome .overlay-door {
+    width: 35vw;
+    top: 60%;
+  }
+}

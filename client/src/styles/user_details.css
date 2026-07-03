@@ -1,0 +1,234 @@
+/* scoped */
+.page-user-details {
+    --primary-color: #002366; /* Navy Blue */
+    --secondary-color: #FFD700; /* Gold */
+    --text-color: #333333; /* Charcoal Gray */
+    --background-color: #F0F0F0; /* Light Gray */
+    --hover-color: #FFD700; /* Hover color for buttons and links */
+}
+
+/* Navbar Styling */
+.page-user-details .navbar {
+    background-color: var(--primary-color); /* Navy Blue background */
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    height: 10%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Keep navbar on top */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a small shadow for depth */
+}
+
+.page-user-details .navbar-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.page-user-details .nav-button {
+    background: none;
+    border: none;
+    color: white; /* Default color */
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-user-details .nav-button.active {
+    background-color: var(--secondary-color); /* Gold color for active button */
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.page-user-details .nav-button.active a {
+    color: #002366 !important;
+}
+.page-user-details .nav-button:hover {
+    background-color: var(--secondary-color); /* Gold hover effect */
+    border-radius: 5px;
+}
+.page-user-details .logo {
+    height: 80px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+    color: #ffffff;
+    font-family: 'Carattere', sans-serif;
+}
+.page-user-details .yellow {
+    color: #ffd700;
+  }
+
+/* Content Styling */
+.page-user-details {
+    
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    position: relative; /* Make the body a reference point for absolute positioning */
+}
+
+.page-user-details::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/pictures/apartment.jpeg"); /* Your background image */
+    background-size: cover; /* Ensure the image covers the entire page */
+    background-position: center; /* Center the background image */
+    filter: blur(5px); /* Apply blur to the background */
+    z-index: -1; /* Put the blurred background behind the content */
+}
+
+.page-user-details .content {
+    position: relative; /* Make sure content appears above the background */
+    margin-top: 60px; /* Add margin to push content below the navbar */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for content */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Grid of Apartments (or Products) */
+.page-user-details .scroll-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 Columns */
+    gap: 20px;
+    width: 90%;
+    padding: 20px;
+}
+
+.page-user-details .scroll-item {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    height: 350px; /* Fix height */
+}
+
+.page-user-details .scroll-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 5px solid #f0f0f0;
+}
+
+.page-user-details .scroll-item .details {
+    padding: 2px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.page-user-details .scroll-item .details h4 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.page-user-details .scroll-item .details p {
+    font-size: 1rem;
+    color: #777;
+}
+
+.page-user-details .scroll-item:hover {
+    transform: translateY(-10px);
+}
+
+.page-user-details .scroll-item:hover .details {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+
+
+
+
+.page-user-details .modal {
+    display: none; /* Hide by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Make sure it's on top */
+}
+
+.page-user-details .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.page-user-details button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.page-user-details #confirm-logout {
+    background-color: red;
+    color: white;
+}
+
+.page-user-details #cancel-logout {
+    background-color: grey;
+    color: white;
+}
+/* Footer Styling */
+.page-user-details footer {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+}
+
+.page-user-details .property-link {
+    display: block;  /* Makes the anchor tag act as a block element */
+    text-decoration: none;  /* Removes the default underline */
+}
+
+.page-user-details .scroll-item {
+    cursor: pointer;  /* Indicates that it's clickable */
+}
+
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+.page-user-details .top-section {
+    display: flex;
+    justify-content: space-around;
+    gap: 40%; /* Adds space between the two sections */
+    width: 90%;
+   flex-wrap: nowrap;
+}
+
+.page-user-details .user-details, .page-user-details .contact-info {
+    flex: 1; 
+}
+.page-user-details .verified-badge {
+    color: #3498db; 
+    font-size: 18px;
+    margin-left: 5px;
+}

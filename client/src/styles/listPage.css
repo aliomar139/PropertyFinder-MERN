@@ -1,0 +1,230 @@
+/* scoped */
+.page-list {
+  --primary-color: #002366;
+  --secondary-color: #FFFFFF; 
+  --accent-color: #FFD700; 
+  --text-color: #333333; 
+  --background-color: #F0F0F0;
+  --title-background-color: #E6F0F8;
+  --input-border: 2px solid var(--background-color);
+}
+
+.page-list {
+  background-color: var(--title-background-color);
+  font-style: italic;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+.page-list .divcenter {
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: var(--title-background-color);
+  color: var(--primary-color);
+  border-radius: 50px;
+  font-size: 1.8rem;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.page-list .center {
+  background: var(--secondary-color);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.page-list .compact-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-list .compact-group > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.page-list .radio-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+.page-list .radio-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.8rem;
+  background: var(--background-color);
+  border-radius: 10px;
+  border: var(--input-border);
+}
+
+.page-list .radio-group div {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.page-list .form-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-list label {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 0.95rem;
+}
+
+.page-list input, .page-list select {
+  width: 90%;
+  padding: 0.8rem;
+  border: var(--input-border);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.page-list textarea {
+  width: 90%;
+ 
+  padding: 1rem;
+  font-size: 1rem;
+  border: var(--input-border);
+  border-radius: 10px;
+  resize: vertical;
+}
+
+.page-list button {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 200px;
+  margin: 1rem auto;
+  display: block;
+}
+
+.page-list button:hover {
+  background: var(--accent-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.page-list .details-grid {
+  display: flex;
+  gap: 2rem;
+  align-items: stretch;
+  margin: 2rem 0;
+}
+
+.page-list .details-grid > div:first-child {
+  flex: 1;
+}
+
+.page-list .details-grid > div:last-child {
+  flex: 1.5;
+}
+.page-list centerdiv {
+  display: flex;
+  gap: 2rem;
+  align-items: start;
+}
+
+.page-list .centerdiv > div:first-child {
+  flex: 1;
+}
+
+.page-list .centerdiv > div:last-child {
+  flex: 2;
+}
+
+.page-list .grid-container {
+  grid-template-columns: repeat(3, 1fr);
+}
+.page-list .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+        gap: 10px;
+        width: 100%;
+        max-width: 350px;
+        justify-content: center;
+      }
+      
+      .page-list .grid-container .image-upload {
+        grid-column: span 1; /* Each image takes 1 column */
+      }
+      
+      .page-list .custom-file-upload {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 100px;
+        background: #f0f0f0;
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        text-align: center;
+        position: relative;
+      }
+      
+      .page-list .custom-file-upload input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+      
+      .page-list .preview {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: none;
+        border: 1px solid #ccc; /* Missing semicolon was here */
+      }
+      .page-list .delete-btn {
+        background-color: #ff4d4d; /* Red background for delete button */
+        color: var(--secondary-color); /* White text */
+        padding: 0.5rem 1rem; /* Smaller padding for a more compact button */
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem; /* Slightly smaller text */
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: auto; /* Let the button width adjust to the content */
+        min-width: 80px; /* Set a minimum width to prevent it from becoming too small */
+        margin: 1rem auto;
+        display: block;
+        text-align: center; /* Center the text */
+      }
+      
+      .page-list .delete-btn:hover {
+        background-color: #ff3333; /* Darker red on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      }
+      
+

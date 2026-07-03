@@ -1,0 +1,171 @@
+/* scoped */
+/* Root Variables */
+.page-verify {
+    --primary-color: #002366; /* Navy Blue */
+    --secondary-color: #FFFFFF; /* White */
+    --accent-color: #FFD700; /* Gold */
+    --text-color: #333333; /* Charcoal Gray */
+    --background-color: #F0F0F0; /* Soft Gray */
+    --title-background-color: #E6F0F8; /* Light Gray-Blue */
+  }
+  
+  /* General Styles */
+  .page-verify {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Align to the top of the screen */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    position: relative;
+    overflow-x: hidden;
+    height: 100%; /* Ensure the body height is 100% for proper scrolling */
+
+  }
+  
+  /* Fix for background image to be fixed */
+  .page-verify::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/pictures/apartment.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Make the background fixed */
+    filter: blur(8px); /* Apply blur effect */
+    z-index: -1; /* Place the blurred image behind the content */
+    pointer-events: none; /* Prevent the background from blocking interactions */
+  }
+  
+  /* Verify Container */
+  .page-verify .verify-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    z-index: 1; /* Ensure the form is above the blurred background */
+  }
+  
+  /* Logo */
+  .page-verify .logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: var(--title-background-color);
+    border-radius: 50px;
+    display: inline-block;
+  }
+  
+  /* Verify Form */
+  .page-verify .verify-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .page-verify .verify-form h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    padding: 1rem;
+    background-color: transparent; /* Remove background color */
+    border-radius: 10px; /* Keep rounded corners */
+    display: inline-block;
+  }
+  
+  /* Form Row */
+  .page-verify .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .page-verify .input-group label {
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  
+  .page-verify .input-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--background-color); /* Soft gray border */
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: transparent;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .page-verify .input-group input:focus {
+    outline: none;
+    border-color: var(--accent-color); /* Gold border on focus */
+    box-shadow: 0 0 10px var(--accent-color); /* Subtle glow effect */
+  }
+  
+  /* Button */
+  .page-verify button {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px; /* Rounded button */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .page-verify button:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    transform: scale(1.05);
+  }
+  
+  /* Error Message */
+  .page-verify .error-message {
+    padding: 15px;
+    background-color: #f44336; /* Red */
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .page-verify .verify-container {
+      padding: 1.5rem;
+      max-width: 90%;
+    }
+  
+    .page-verify .logo {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+  
+    .page-verify .verify-form h2 {
+      font-size: 1.6rem;
+    }
+  
+    .page-verify .input-group input {
+      padding: 0.65rem;
+    }
+  
+    .page-verify button {
+      padding: 0.75rem;
+    }
+  }
+  

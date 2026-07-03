@@ -1,0 +1,21 @@
+/* Global reset — each page's legacy `body` rules are now scoped to its
+   .page-* wrapper, so the real body just needs a clean slate. */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+}
+
+[class^='page-'],
+[class*=' page-'] {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Welcome page: #backgroundContainer (and the clickable door inside it) sits
+   at z-index -1, i.e. BEHIND the page wrapper. If the wrapper had height, its
+   transparent box would swallow all clicks and the door would be unclickable.
+   In PHP, <body> had zero height (all children fixed/absolute), so clicks fell
+   through to the door — reproduce that here. */
+.page-welcome {
+  min-height: 0;
+}

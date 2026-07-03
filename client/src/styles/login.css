@@ -1,0 +1,223 @@
+/* scoped */
+/* Root Variables */
+.page-login {
+  --primary-color: #002366; /* Navy Blue */
+  --secondary-color: #ffffff; /* White */
+  --accent-color: #ffd700; /* Gold */
+  --text-color: #333333; /* Charcoal Gray */
+  --background-color: #f0f0f0; /* Soft Gray */
+  --title-background-color: #e6f0f8; /* Light Gray-Blue */
+}
+
+/* General Styles */
+.page-login {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--text-color);
+  position: relative; /* Make sure the body element is the reference for absolute positioning */
+  overflow: hidden; /* Prevents scrollbars from appearing due to pseudo-element */
+}
+
+.page-login::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/pictures/apartment.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px); /* Apply blur effect here */
+  z-index: -1; /* Place the blurred image behind the content */
+  pointer-events: none; /* Prevent the background from blocking interactions */
+}
+
+/* Login Container */
+.page-login .login-container {
+  background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+  padding: 2rem;
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  z-index: 1; /* Ensure the form is above the blurred background */
+}
+
+/* Logo */
+.page-login .logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--title-background-color);
+  border-radius: 50px; /* Rounded edges for the logo */
+  display: inline-block;
+}
+
+/* Input Fields */
+.page-login .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.page-login .input-group label {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.page-login .input-group input {
+  padding: 0.75rem;
+  border: 1px solid var(--background-color); /* Soft gray border */
+  border-radius: 10px; /* Rounded input fields */
+  font-size: 1rem;
+  background-color: transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.page-login .input-group input:focus {
+  outline: none;
+  border-color: var(--accent-color); /* Yellow border on focus */
+  box-shadow: 0 0 10px var(--accent-color); /* Subtle glow effect */
+}
+
+/* Password Wrapper */
+
+.page-login .password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.page-login .password-wrapper input {
+  width: 60%;
+  padding-right: 40px; /* Add space for the icon */
+  height: 35px; /* Adjust based on your design */
+  font-size: 16px; /* Adjust font size */
+}
+
+.page-login .password-wrapper img {
+  position: absolute;
+  right: 15%; /* Adjust distance from the right edge */
+
+  cursor: pointer;
+  top: 60%; /* Lower the icon vertically */
+  transform: translateY(-50%); /* Fine-tune centering */
+  opacity: 0.7;
+}
+
+.page-login .password-wrapper img:hover {
+  opacity: 1; /* Change opacity on hover */
+}
+
+/* Login Button */
+.page-login button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px; /* Rounded button */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.page-login button:hover {
+  background-color: var(--accent-color); /* Gold color on hover */
+  color: var(--primary-color);
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Signup Link */
+.page-login .signup-link {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.page-login .signup-link a {
+  color: var(--accent-color); /* Use the yellow accent color */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.page-login .signup-link a:hover {
+  text-decoration: underline;
+  color: var(--primary-color); /* Change to navy blue on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-login .login-container {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .page-login .logo {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .page-login .input-group input {
+    padding: 0.65rem;
+  }
+
+  .page-login button {
+    padding: 0.75rem;
+  }
+}
+.page-login .success-message {
+  padding: 15px;
+  background-color: #4caf50; /* Green */
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page-login .failed-message {
+  padding: 15px;
+  color: red;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.page-login .reset-link {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  text-align: right; /* Aligns link to the right */
+}
+
+.page-login .reset-link a {
+  color: var(--primary-color); /* Gold color */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.page-login .reset-link a:hover {
+  text-decoration: underline;
+  color: var(--accent-color); /* Navy blue on hover */
+}
+.page-login .error-message {
+  background: #ffebee;
+  color: #b71c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+  border: 1px solid #ffcdd2;
+  font-weight: 500;
+  text-align: center;
+  font-style: normal;
+}

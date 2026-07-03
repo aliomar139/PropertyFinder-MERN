@@ -1,0 +1,432 @@
+/* scoped */
+/* Root variables */
+.page-property-details {
+    --primary-color: #002366;
+    --secondary-color: #FFFFFF;
+    --accent-color: #FFD700;
+    --text-color: #333333;
+    --background-color: #F0F0F0;
+    --title-background-color: #E6F0F8;
+}
+.page-property-details .favorite-btn {
+    position: relative; /* To position the message */
+    display: inline-block;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.page-property-details .favorite-btn:hover {
+    transform: scale(1.2); /* Make the button bigger on hover */
+}
+
+/* Star rating */
+.page-property-details .star {
+    font-size: 32px; /* Increased size for the star */
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.page-property-details .star.filled {
+    color: gold;
+}
+
+
+/* Tooltip styling */
+.page-property-details .favorite-btn .favorite-message {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    visibility: hidden; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.page-property-details .favorite-btn:hover .favorite-message {
+    visibility: visible;
+    opacity: 1; /* Show message on hover */
+}
+
+
+.page-property-details .favorite-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Body styles */
+.page-property-details {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Property details container */
+.page-property-details .property-container {
+    display: flex;
+    flex-direction: row;
+    top: 5%;
+    gap: 2%; /* Slightly larger gap for better spacing */
+height: 100%;
+    margin:70px auto;
+    background-color: var(--secondary-color);
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    padding-top:7%;
+}
+
+/* Property image (left side) */
+.page-property-details .property-image {
+    flex: 2;
+    max-width: 600px; /* Increase max-width for larger image */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Carousel Container */
+.page-property-details .carousel {
+    position: relative;
+    width: 100%;
+    height: 350px; /* Increase height for a more prominent main image */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* Carousel Images */
+.page-property-details .carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    height: 100%;
+}
+
+.page-property-details .carousel-image {
+    flex: 0 0 100%;
+    display: none; /* Hide all images initially */
+    height: 100%;
+}
+
+/* Image Styling */
+.page-property-details .carousel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Buttons for carousel navigation */
+.page-property-details .prev-btn, .page-property-details .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 20px; /* Reduced font size for smaller arrows */
+    padding: 12px; /* Reduced padding for smaller buttons */
+    border: none;
+    cursor: pointer;
+    border-radius: 50%; /* Retain circular shape */
+    z-index: 10;
+}
+
+
+.page-property-details .prev-btn {
+    left: 1%;
+}
+
+.page-property-details .next-btn {
+    right: 1%;
+}
+
+.page-property-details .prev-btn:hover, .page-property-details .next-btn:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Property details text */
+.page-property-details .property-details {
+    width: 40%;
+    flex: 1;
+    background-color: var(--secondary-color);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Title */
+.page-property-details .property-details h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Description */
+.page-property-details .property-details p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+/* Price styling */
+.page-property-details .property-details .price {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* Report Button */
+.page-property-details .report-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.page-property-details .report-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Action Buttons */
+.page-property-details .edit-btn, .page-property-details .delete-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s ease-in-out;
+}
+
+.page-property-details .edit-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.page-property-details .edit-btn:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.page-property-details .edit-btn:active {
+    transform: scale(0.95);
+}
+
+.page-property-details .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.page-property-details .delete-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+.page-property-details .delete-btn:active {
+    transform: scale(0.95);
+}
+
+/* User Details Button */
+.page-property-details .user-details-btn { 
+    position: absolute;
+    top: 2%;
+    right: 0;
+    padding: 12px 40px 12px 24px; /* Extra padding on the right */
+    background-color: #002366; /* Primary color */
+    color: #fff;
+    border: none;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0; /* Pin-like shape */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.page-property-details .user-details-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -20px; /* Extends beyond the container */
+    width: 20px;
+    height: 100%;
+    background-color: #002366;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.page-property-details .user-details-btn:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.page-property-details .user-details-btn:active {
+    transform: scale(0.95);
+}
+.page-property-details .user-details-btn { 
+    position: absolute;
+    top: 2%;
+    right: 0;
+    padding: 12px 40px 12px 24px;
+    background: linear-gradient(135deg, #002366 60%, #001a4d); /* Gradient for depth */
+    color: #fff;
+    border: none;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.page-property-details .user-details-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -20px;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(135deg, #002366 60%, #001a4d);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.3); /* Adds depth to the extension */
+}
+
+.page-property-details .user-details-btn:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.page-property-details .user-details-btn:active {
+    transform: scale(0.95);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .page-property-details .property-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .page-property-details .property-image {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .page-property-details .property-details {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.page-property-details .buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.page-property-details .report-message {
+    margin-top: 10px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.page-property-details .report-message.success {
+    color: green;
+    background-color: #e6ffe6;
+    border: 1px solid #00cc00;
+}
+.page-property-details .report-message.error {
+    color: red;
+    background-color: #ffe6e6;
+    border: 1px solid #ff0000;
+}
+.page-property-details .navbar {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    height: 10%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.page-property-details .navbar-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.page-property-details .nav-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-property-details .nav-button.active {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.page-property-details .nav-button.active a {
+    color: #002366 !important;
+}
+
+.page-property-details .nav-button:hover {
+    background-color: var(--accent-color);
+    border-radius: 5px;
+}
+.page-property-details .logo {
+    height: 80px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    margin-right: 5%;
+    color: #ffffff;
+    font-family: 'Carattere', sans-serif;
+}
+
+.page-property-details .yellow {
+    color: #ffd700;
+}
