@@ -54,7 +54,8 @@ The app has **two parts** — the API (`server/`) and the web client (`client/`)
 cd server
 npm install
 cp .env.example .env      # then edit .env (see Configuration below)
-npm run seed              # creates an admin login on a fresh database
+npm run import-data       # load the demo listings, users & images
+npm run seed              # create an admin login for the admin dashboard
 npm run dev               # ▶ API running at http://localhost:5000
 ```
 
@@ -74,6 +75,8 @@ Open **http://localhost:3000** in your browser — you're ready to go. 🎉
 Email:    admin@propertyfinder.com
 Password: admin12345
 ```
+
+> 💡 **Demo data:** `npm run import-data` loads sample listings, users, and reports from `server/demo-data/` so the app looks populated out of the box. The bundled user passwords are hashed, so log in with the **seeded admin above** (or sign up for your own account) rather than the demo users.
 
 ---
 
@@ -102,6 +105,8 @@ All backend settings live in `server/.env` (copied from `.env.example`):
 | `npm run dev` | Start the API with live reload |
 | `npm start` | Start the API in production (also serves the built client) |
 | `npm run seed` | Create an admin account on a fresh database |
+| `npm run import-data` | Load the bundled demo data (`server/demo-data/`) into MongoDB — skips collections that already have data; add `-- --force` to overwrite |
+| `npm run export-data` | Snapshot the current database to `server/demo-data/*.json` |
 | `npm run migrate` | Import existing MySQL data + uploaded files into MongoDB |
 | `npm run smoke` | Run an end-to-end smoke test against an in-memory MongoDB |
 

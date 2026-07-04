@@ -1,0 +1,24 @@
+[
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d96"
+    },
+    "property": {
+      "$oid": "6a483873ea3c0f5d0bba0d68"
+    },
+    "user": {
+      "$oid": "6a483873ea3c0f5d0bba0d5f"
+    },
+    "reason": "hhhh",
+    "dateReported": {
+      "$date": "2025-09-29T05:00:31Z"
+    },
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.966Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.966Z"
+    },
+    "__v": 0
+  }
+]

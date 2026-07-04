@@ -1,0 +1,19 @@
+[
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d98"
+    },
+    "user": {
+      "$oid": "6a483873ea3c0f5d0bba0d57"
+    },
+    "idDocumentPath": "uploads/id_docs/5253877.png",
+    "status": 1,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.973Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.973Z"
+    },
+    "__v": 0
+  }
+]

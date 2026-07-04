@@ -9,6 +9,8 @@
     "dev": "node --watch src/server.js",
     "migrate": "node scripts/migrate.js",
     "seed": "node scripts/seed.js",
+    "export-data": "node scripts/export-data.js",
+    "import-data": "node scripts/import-data.js",
     "smoke": "npm install mongodb-memory-server --no-save && node scripts/smoke-test.mjs"
   },
   "dependencies": {
