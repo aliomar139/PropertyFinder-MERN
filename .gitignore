@@ -1,5 +1,6 @@
 node_modules/
 dist/
 .env
-server/uploads/
+# Ship demo property/profile images, but keep uploaded ID documents out of git
+server/uploads/id_docs/
 *.log
