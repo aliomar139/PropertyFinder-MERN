@@ -1,0 +1,202 @@
+[
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d53"
+    },
+    "firstname": "admin",
+    "lastname": "",
+    "number": "12345678",
+    "email": "admin@admin.com",
+    "password": "$2a$10$bf4kHfq2O5gDillASGgMDOvt1Auro/Xr09YCQkOv3JTGBDgtadbgG",
+    "passwordAlgo": "bcrypt",
+    "role": 1,
+    "status": 0,
+    "locked": 0,
+    "tries": 0,
+    "resetCode": null,
+    "profile": "uploads/profiles/profile_17.png",
+    "verify": 0,
+    "favorites": [],
+    "legacyId": 17,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.843Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:36:24.627Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d55"
+    },
+    "firstname": "Ali",
+    "lastname": "Omar",
+    "number": "78919283",
+    "email": "aliyomar630@gmail.com",
+    "password": "25582e497470314d459a35e348f86e1382cbfe011c8bbe004ebcfa70c96ab8c2",
+    "passwordAlgo": "sha256",
+    "role": 0,
+    "status": 0,
+    "locked": 0,
+    "tries": 0,
+    "resetCode": "129032",
+    "profile": "uploads/profiles/profile_19.png",
+    "verify": 1,
+    "favorites": [
+      {
+        "$oid": "6a483873ea3c0f5d0bba0d61"
+      }
+    ],
+    "legacyId": 19,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.853Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.938Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d57"
+    },
+    "firstname": "George",
+    "lastname": "Ibrahim",
+    "number": "76677753",
+    "email": "george123@gmail.com",
+    "password": "25582e497470314d459a35e348f86e1382cbfe011c8bbe004ebcfa70c96ab8c2",
+    "passwordAlgo": "sha256",
+    "role": 0,
+    "status": 0,
+    "locked": 0,
+    "tries": 0,
+    "resetCode": null,
+    "profile": "uploads/profiles/profile_20.png",
+    "verify": 1,
+    "favorites": [
+      {
+        "$oid": "6a483873ea3c0f5d0bba0d75"
+      },
+      {
+        "$oid": "6a483873ea3c0f5d0bba0d65"
+      }
+    ],
+    "legacyId": 20,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.856Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.957Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d59"
+    },
+    "firstname": "Abdalla",
+    "lastname": "Mestrah",
+    "number": "79307696",
+    "email": "abdallahmestrah@gmail.com",
+    "password": "25582e497470314d459a35e348f86e1382cbfe011c8bbe004ebcfa70c96ab8c2",
+    "passwordAlgo": "sha256",
+    "role": 0,
+    "status": 0,
+    "locked": 0,
+    "tries": 0,
+    "resetCode": null,
+    "profile": "uploads/profiles/profile_21.png",
+    "verify": 0,
+    "favorites": [],
+    "legacyId": 21,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.858Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.858Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d5b"
+    },
+    "firstname": "Mohamad",
+    "lastname": "Hajhassan",
+    "number": "78919284",
+    "email": "mohamadhajhassan@gmail.com",
+    "password": "25582e497470314d459a35e348f86e1382cbfe011c8bbe004ebcfa70c96ab8c2",
+    "passwordAlgo": "sha256",
+    "role": 0,
+    "status": 0,
+    "locked": 0,
+    "tries": 0,
+    "resetCode": null,
+    "profile": null,
+    "verify": 0,
+    "favorites": [],
+    "legacyId": 22,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.860Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.860Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d5d"
+    },
+    "firstname": "Hsein",
+    "lastname": "Husseini",
+    "number": "71124493",
+    "email": "hseinhusseini@gmail.com",
+    "password": "25582e497470314d459a35e348f86e1382cbfe011c8bbe004ebcfa70c96ab8c2",
+    "passwordAlgo": "sha256",
+    "role": 0,
+    "status": 1,
+    "locked": 0,
+    "tries": 0,
+    "resetCode": null,
+    "profile": null,
+    "verify": 0,
+    "favorites": [],
+    "legacyId": 24,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.862Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.862Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d5f"
+    },
+    "firstname": "Ali",
+    "lastname": "Omar",
+    "number": "78919243",
+    "email": "fifa26443@gmail.com",
+    "password": "c727b25970bcd6f969f9ca9bf0ff9b74b0d28dd4e2f7b271a82cbaa535feec22",
+    "passwordAlgo": "sha256",
+    "role": 0,
+    "status": 0,
+    "locked": 0,
+    "tries": 0,
+    "resetCode": "380965",
+    "profile": null,
+    "verify": 0,
+    "favorites": [],
+    "legacyId": 25,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.864Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.864Z"
+    },
+    "__v": 0
+  }
+]

@@ -1,0 +1,670 @@
+[
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d61"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d59"
+    },
+    "title": "210 (m²) apartment",
+    "description": "A 210 (m²) apartment located in ain-el-mreisseh, beirout at Rue Gouraud , Building 3. Has 3 bedrooms, 2 living rooms, and 2 bathrooms. It is furnished. This apartment is for rent at 700 USD per month.",
+    "type": "apartment",
+    "location": "ain-el-mreisseh, beirout at Rue Gouraud , Building 3",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 3,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 2,
+      "furnished": 1,
+      "moreDetails": "",
+      "governorate": "beirout",
+      "city": "ain-el-mreisseh",
+      "exactLocation": "Rue Gouraud , Building 3",
+      "area": 210,
+      "price": 700
+    },
+    "images": [
+      {
+        "path": "uploads/1739914293_apartment.jpeg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d62"
+        }
+      },
+      {
+        "path": "uploads/appartment.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d63"
+        }
+      }
+    ],
+    "legacyId": 59,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.881Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.881Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d65"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d55"
+    },
+    "title": "160 (m²) house",
+    "description": "A 160 (m²) house located in baabda, mount-lebanon at municipality street , near supermaket abou hadi. Has 2 bedrooms, 1 living rooms, and 2 bathrooms. It is not furnished. and also has .\n This house is for sale at 50000 USD.",
+    "type": "house",
+    "location": "baabda, mount-lebanon at municipality street , near supermaket abou hadi",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 2,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 1,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "mount-lebanon",
+      "city": "baabda",
+      "exactLocation": "municipality street , near supermaket abou hadi",
+      "area": 160,
+      "price": 50000
+    },
+    "images": [
+      {
+        "path": "uploads/1739914691_glass-house.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d66"
+        }
+      }
+    ],
+    "legacyId": 60,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.885Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.885Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d68"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d57"
+    },
+    "title": "320 (m²) villa",
+    "description": "A 320 (m²) villa located in batroun, north-lebanon at old souk street , near the coast. Has 4 bedrooms, 3 living rooms, and 7 bathrooms. It is furnished. and also has .\n This villa is for sale at 1700000 USD.",
+    "type": "villa",
+    "location": "batroun, north-lebanon at old souk street , near the coast",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 4,
+      "nbBathrooms": 7,
+      "nbLivingrooms": 3,
+      "furnished": 1,
+      "moreDetails": "",
+      "governorate": "north-lebanon",
+      "city": "batroun",
+      "exactLocation": "old souk street , near the coast",
+      "area": 320,
+      "price": 1700000
+    },
+    "images": [
+      {
+        "path": "uploads/1739914850_villa3.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d69"
+        }
+      },
+      {
+        "path": "uploads/1739914850_villa2.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d6a"
+        }
+      }
+    ],
+    "legacyId": 61,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.889Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.889Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d6c"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d57"
+    },
+    "title": "100 (m²) cabin",
+    "description": "A 100 (m²) cabin located in bint-jbeil, nabatieh at Al-Mahatta Street, facing the station. Has 1 bedrooms, 1 living rooms, and 1 bathrooms. It is not furnished. This cabin is for rent at 200 USD per month.",
+    "type": "cabin",
+    "location": "bint-jbeil, nabatieh at Al-Mahatta Street, facing the station",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 1,
+      "nbBathrooms": 1,
+      "nbLivingrooms": 1,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "nabatieh",
+      "city": "bint-jbeil",
+      "exactLocation": "Al-Mahatta Street, facing the station",
+      "area": 100,
+      "price": 200
+    },
+    "images": [
+      {
+        "path": "uploads/1739915088_cabin.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d6d"
+        }
+      }
+    ],
+    "legacyId": 62,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.893Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.893Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d6f"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d5b"
+    },
+    "title": "210 (m²) house",
+    "description": "A 210 (m²) house located in zahle, bekaa at zahle boulevard, near st. george status. Has 3 bedrooms, 2 living rooms, and 2 bathrooms. It is not furnished. and also has .\n This house is for rent at 400 USD per month.",
+    "type": "house",
+    "location": "zahle, bekaa at zahle boulevard, near st. george status",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 3,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 2,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "bekaa",
+      "city": "zahle",
+      "exactLocation": "zahle boulevard, near st. george status",
+      "area": 210,
+      "price": 400
+    },
+    "images": [
+      {
+        "path": "uploads/1739916204_house2.jpeg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d70"
+        }
+      }
+    ],
+    "legacyId": 63,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.898Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.898Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d72"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d5b"
+    },
+    "title": "200 (m²) apartment",
+    "description": "A 200 (m²) apartment located in hamra, beirout at downtown. Has 3 bedrooms, 1 living rooms, and 2 bathrooms. It is furnished. and also has .\n This apartment is for rent at 1200 USD per month.",
+    "type": "apartment",
+    "location": "hamra, beirout at downtown",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 3,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 1,
+      "furnished": 1,
+      "moreDetails": "",
+      "governorate": "beirout",
+      "city": "hamra",
+      "exactLocation": "downtown",
+      "area": 200,
+      "price": 1200
+    },
+    "images": [
+      {
+        "path": "uploads/1739916246_apartment6.webp",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d73"
+        }
+      }
+    ],
+    "legacyId": 64,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.904Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.904Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d75"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d5b"
+    },
+    "title": "180 (m²) house",
+    "description": "A 180 (m²) house located in verdun, beirout at the main street , near abc. Has 4 bedrooms, 2 living rooms, and 2 bathrooms. It is not furnished. and also has .\n This house is for sale at 120000 USD.",
+    "type": "house",
+    "location": "verdun, beirout at the main street , near abc",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 4,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 2,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "beirout",
+      "city": "verdun",
+      "exactLocation": "the main street , near abc",
+      "area": 180,
+      "price": 120000
+    },
+    "images": [
+      {
+        "path": "uploads/1739916315_house4.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d76"
+        }
+      }
+    ],
+    "legacyId": 65,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.908Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.908Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d78"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d59"
+    },
+    "title": "70 (m²) cabin",
+    "description": "A 70 (m²) cabin located in bikfaya, mount-lebanon at rue de leglise. Has 1 bedrooms, 1 living rooms, and 1 bathrooms. It is not furnished. and also has .\n This cabin is for sale at 23000 USD.",
+    "type": "cabin",
+    "location": "bikfaya, mount-lebanon at rue de leglise",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 1,
+      "nbBathrooms": 1,
+      "nbLivingrooms": 1,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "mount-lebanon",
+      "city": "bikfaya",
+      "exactLocation": "rue de leglise",
+      "area": 70,
+      "price": 23000
+    },
+    "images": [
+      {
+        "path": "uploads/1739916683_cabin6.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d79"
+        }
+      }
+    ],
+    "legacyId": 66,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.910Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.910Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d7b"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d59"
+    },
+    "title": "140 (m²) house",
+    "description": "A 140 (m²) house located in riyaq, bekaa at steert aboulfadl near the msalabiye. Has 2 bedrooms, 1 living rooms, and 2 bathrooms. It is not furnished. and also has .\n This house is for rent at 300 USD per month.",
+    "type": "house",
+    "location": "riyaq, bekaa at steert aboulfadl near the msalabiye",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 2,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 1,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "bekaa",
+      "city": "riyaq",
+      "exactLocation": "steert aboulfadl near the msalabiye",
+      "area": 140,
+      "price": 300
+    },
+    "images": [
+      {
+        "path": "uploads/1739917007_house6.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d7c"
+        }
+      }
+    ],
+    "legacyId": 67,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.913Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.913Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d7e"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d59"
+    },
+    "title": "200 (m²) apartment",
+    "description": "A 200 (m²) apartment located in ras-beirut, beirout at haret hreik. Has 3 bedrooms, 2 living rooms, and 2 bathrooms. It is furnished. and also has .\n This apartment is for sale at 75000 USD.",
+    "type": "apartment",
+    "location": "ras-beirut, beirout at haret hreik",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 3,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 2,
+      "furnished": 1,
+      "moreDetails": "",
+      "governorate": "beirout",
+      "city": "ras-beirut",
+      "exactLocation": "haret hreik",
+      "area": 200,
+      "price": 75000
+    },
+    "images": [
+      {
+        "path": "uploads/1739917164_apartment3.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d7f"
+        }
+      }
+    ],
+    "legacyId": 68,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.915Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.915Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d81"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d55"
+    },
+    "title": "270 (m²) villa",
+    "description": "A 270 (m²) villa located in zgharta, north-lebanon at rue de la chapele. Has 4 bedrooms, 2 living rooms, and 6 bathrooms. It is not furnished. and also has .\n This villa is for sale at 700000 USD.",
+    "type": "villa",
+    "location": "zgharta, north-lebanon at rue de la chapele",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 4,
+      "nbBathrooms": 6,
+      "nbLivingrooms": 2,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "north-lebanon",
+      "city": "zgharta",
+      "exactLocation": "rue de la chapele",
+      "area": 270,
+      "price": 700000
+    },
+    "images": [
+      {
+        "path": "uploads/1739917292_villa4.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d82"
+        }
+      }
+    ],
+    "legacyId": 69,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.918Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.918Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d84"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d55"
+    },
+    "title": "260 (m²) villa",
+    "description": "A 260 (m²) villa located in zahle, bekaa at haouch l oumara. Has 4 bedrooms, 3 living rooms, and 2 bathrooms. It is furnished. and also has .\n This villa is for rent at 5000 USD per month.",
+    "type": "villa",
+    "location": "zahle, bekaa at haouch l oumara",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 4,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 3,
+      "furnished": 1,
+      "moreDetails": "",
+      "governorate": "bekaa",
+      "city": "zahle",
+      "exactLocation": "haouch l oumara",
+      "area": 260,
+      "price": 5000
+    },
+    "images": [
+      {
+        "path": "uploads/1739917400_villa6.avif",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d85"
+        }
+      }
+    ],
+    "legacyId": 70,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.921Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.921Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d87"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d55"
+    },
+    "title": "80 (m²) cabin",
+    "description": "A 80 (m²) cabin located in mina, north-lebanon at the coast. Has 2 bedrooms, 1 living rooms, and 1 bathrooms. It is not furnished. and also has .\n This cabin is for sale at 23000 USD.",
+    "type": "cabin",
+    "location": "mina, north-lebanon at the coast",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 2,
+      "nbBathrooms": 1,
+      "nbLivingrooms": 1,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "north-lebanon",
+      "city": "mina",
+      "exactLocation": "the coast",
+      "area": 80,
+      "price": 23000
+    },
+    "images": [
+      {
+        "path": "uploads/1739917543_cabin3.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d88"
+        }
+      }
+    ],
+    "legacyId": 71,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.925Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.925Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d8a"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d55"
+    },
+    "title": "90 (m²) cabin",
+    "description": "A 90 (m²) cabin located in aley, mount-lebanon at ras l jabal. Has 1 bedrooms, 1 living rooms, and 1 bathrooms. It is not furnished. and also has .\n This cabin is for rent at 400 USD per month.",
+    "type": "cabin",
+    "location": "aley, mount-lebanon at ras l jabal",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 1,
+      "nbBathrooms": 1,
+      "nbLivingrooms": 1,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "mount-lebanon",
+      "city": "aley",
+      "exactLocation": "ras l jabal",
+      "area": 90,
+      "price": 400
+    },
+    "images": [
+      {
+        "path": "uploads/1739917625_cabin2.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d8b"
+        }
+      }
+    ],
+    "legacyId": 72,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.927Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.927Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d8d"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d57"
+    },
+    "title": "190 (m²) apartment",
+    "description": "A 190 (m²) apartment located in hamra, beirout at downtown. Has 3 bedrooms, 3 living rooms, and 2 bathrooms. It is furnished. and also has .\n This apartment is for rent at 2500 USD per month.",
+    "type": "apartment",
+    "location": "hamra, beirout at downtown",
+    "status": "rent",
+    "details": {
+      "nbBedrooms": 3,
+      "nbBathrooms": 2,
+      "nbLivingrooms": 3,
+      "furnished": 1,
+      "moreDetails": "",
+      "governorate": "beirout",
+      "city": "hamra",
+      "exactLocation": "downtown",
+      "area": 190,
+      "price": 2500
+    },
+    "images": [
+      {
+        "path": "uploads/1739917800_apartment5.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d8e"
+        }
+      }
+    ],
+    "legacyId": 73,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.929Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.929Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6a483873ea3c0f5d0bba0d90"
+    },
+    "owner": {
+      "$oid": "6a483873ea3c0f5d0bba0d57"
+    },
+    "title": "150 (m²) house",
+    "description": "A 150 (m²) house located in chtaura, bekaa at the crossroad. Has 2 bedrooms, 1 living rooms, and 1 bathrooms. It is not furnished. and also has .\n This house is for sale at 57000 USD.",
+    "type": "house",
+    "location": "chtaura, bekaa at the crossroad",
+    "status": "sell",
+    "details": {
+      "nbBedrooms": 2,
+      "nbBathrooms": 1,
+      "nbLivingrooms": 1,
+      "furnished": 0,
+      "moreDetails": "",
+      "governorate": "bekaa",
+      "city": "chtaura",
+      "exactLocation": "the crossroad",
+      "area": 150,
+      "price": 57000
+    },
+    "images": [
+      {
+        "path": "uploads/1739917983_apartment2.jpg",
+        "_id": {
+          "$oid": "6a483873ea3c0f5d0bba0d91"
+        }
+      }
+    ],
+    "legacyId": 74,
+    "createdAt": {
+      "$date": "2026-07-03T22:32:19.932Z"
+    },
+    "updatedAt": {
+      "$date": "2026-07-03T22:32:19.932Z"
+    },
+    "__v": 0
+  }
+]
