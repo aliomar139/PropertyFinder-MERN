@@ -1,121 +1,118 @@
-/* scoped */
-.page-admin {
-    --primary-color: #002366;
-    --secondary-color: #FFD700;
-    --text-color: #333333;
-    --background-color: #F0F0F0;
-    --hover-color: #FFD700;
+/* ============================================================================
+   Admin. Five list views and one overview, all built from the same table shell
+   in components.css so a row means the same thing wherever it appears.
+   ========================================================================= */
+
+.page-admin,
+.page-user-mgmt,
+.page-prop-mgmt,
+.page-reports,
+.page-banned,
+.page-all-verify {
+  background: var(--bg);
 }
 
-@font-face {
-    font-family: 'Carattere';
-    src: url('/KumarOne-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+.admin {
+  padding-top: var(--section);
+  padding-bottom: var(--section);
 }
 
-.page-admin {
-    padding-top: 150px;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f5f5f5;
+/* --------------------------------------------------------------- overview */
+.admin__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: var(--gap);
 }
 
-.page-admin .yellow {
-    color: #ffd700;
+.admin__tile {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1), var(--edge-light);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
-/* Navbar Styling (Unchanged) */
-.page-admin .navbar {
-    background-color: var(--primary-color);
-    padding: 10px 20px;
-    position: fixed;
-    width: 100%;
-    height: 10%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+.admin__tile:hover {
+  /* Same blue hover edge as a property card: the admin area is a different
+     density, not a different product. */
+  border-color: var(--brand-border-strong);
+  box-shadow: var(--shadow-3);
+  transform: translateY(-2px);
+  color: inherit;
+}
+
+.admin__tile:active {
+  transform: translateY(-1px) scale(0.995);
+  transition-duration: var(--dur-instant);
+}
+
+.admin__tile-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: var(--r-sm);
+  background: var(--surface-brand);
+  border: 1px solid var(--brand-border);
+  color: var(--brand-text);
+}
+
+/* The destructive-adjacent destinations are tinted differently so they do not
+   read as ordinary navigation. */
+.admin__tile--caution .admin__tile-icon {
+  background: var(--danger-tint);
+  border-color: color-mix(in srgb, var(--danger) 32%, transparent);
+  color: var(--danger-hover);
+}
+
+.admin__tile-title {
+  display: block;
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-display);
+}
+
+.admin__tile-desc {
+  display: block;
+  margin-top: var(--sp-1);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-lh);
+  color: var(--fg-muted);
+}
+
+/* ------------------------------------------------------------ table views */
+.admin__reason {
+  max-width: 34ch;
+  color: var(--fg-secondary);
+  overflow-wrap: anywhere;
+}
+
+.admin__doc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-weight: var(--weight-medium);
+}
+
+/* Below the table's minimum width the wrapper scrolls; a hint says so rather
+   than leaving the cut-off column to be discovered by accident. */
+.admin__scroll-hint {
+  display: none;
+  align-items: center;
+  gap: var(--sp-1);
+  margin-top: var(--sp-2);
+}
+
+@media (max-width: 760px) {
+  .admin__scroll-hint {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.page-admin .navbar-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.page-admin .nav-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 10px 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.page-admin .nav-button.active {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
-.page-admin .nav-button.active a {
-    color: #002366 !important;
-}
-
-.page-admin .nav-button:hover {
-    background-color: var(--secondary-color);
-    border-radius: 5px;
-}
-
-.page-admin .logo {
-    height: 80px;
-    font-size: 25px;
-    display: flex;
-    align-items: center;
-    margin-right: 100px;
-    color: #ffffff;
-    font-family: 'Carattere', sans-serif;
-}
-
-/* Admin Options (Unchanged + New Buttons) */
-.page-admin .content {
-    padding: 20px;
-    text-align: center;
-}
-
-.page-admin .admin-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.page-admin .admin-button {
-    background-color: var(--primary-color);
-    padding: 15px;
-    border-radius: 8px;
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    transition: background 0.3s, transform 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.page-admin .admin-button:hover {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    transform: scale(1.05);
+  }
 }

@@ -1,68 +1,24 @@
-import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import AppBar from './AppBar.jsx';
 
-// The navbar from home.php / favorites.php / my-propreties.php,
-// including the logout confirmation modal. Whole buttons navigate
-// (the PHP pages attached click JS to the buttons, not just the links).
+/* Main navigation. Destinations are named for their contents rather than a
+   vague umbrella, and the set adapts to the signed-in role. */
 export default function Navbar({ showLogout = true }) {
-  const { user, logout, setFlash } = useAuth();
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [showModal, setShowModal] = useState(false);
+  const { user } = useAuth();
 
-  const cls = (to) => (pathname === to ? 'nav-button active' : 'nav-button');
-  const linkStyle = { color: 'white', textDecoration: 'none' };
+  const items = [{ to: '/home', label: 'Browse', icon: 'search' }];
 
-  function confirmLogout() {
-    setFlash('Logout Successfully!');
-    logout();
-    navigate('/login');
+  if (user?.role === 1) {
+    items.push({ to: '/admin', label: 'Admin', icon: 'shield' });
   }
 
-  return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <button type="button" className={cls('/home')} id="all" onClick={() => navigate('/home')}>
-            <span style={linkStyle}>Home</span>
-          </button>
-          {user?.role === 1 && (
-            <button type="button" className={cls('/admin')} onClick={() => navigate('/admin')}>
-              <span style={linkStyle}>Admin</span>
-            </button>
-          )}
-          {user?.role === 0 && (
-            <>
-              <button type="button" className={cls('/user')} onClick={() => navigate('/user')}>
-                <span style={linkStyle}>User</span>
-              </button>
-              <button type="button" className={cls('/my-properties')} onClick={() => navigate('/my-properties')}>
-                <span style={linkStyle}>My Propreties</span>
-              </button>
-              <button type="button" className={cls('/favorites')} id="favorites" onClick={() => navigate('/favorites')}>
-                <span style={linkStyle}>Favorites</span>
-              </button>
-            </>
-          )}
-          {showLogout && (
-            <button type="button" className="nav-button" id="logout" onClick={() => setShowModal(true)}>Log Out</button>
-          )}
-        </div>
-        <div className="logo">
-          <h2>Property<span className="yellow">Finder</span></h2>
-        </div>
-      </nav>
+  if (user?.role === 0) {
+    items.push(
+      { to: '/my-properties', label: 'My listings', icon: 'building' },
+      { to: '/favorites', label: 'Favourites', icon: 'heart' },
+      { to: '/user', label: 'Profile', icon: 'user' }
+    );
+  }
 
-      {showModal && (
-        <div id="logout-modal" className="modal" style={{ display: 'flex' }}>
-          <div className="modal-content">
-            <h3>Are you sure you want to log out?</h3>
-            <button type="button" id="confirm-logout" onClick={confirmLogout}>Yes</button>
-            <button type="button" id="cancel-logout" onClick={() => setShowModal(false)}>No</button>
-          </div>
-        </div>
-      )}
-    </>
-  );
+  return <AppBar items={items} showLogout={showLogout} />;
 }

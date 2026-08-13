@@ -1,230 +1,171 @@
-/* scoped */
-.page-list {
-  --primary-color: #002366;
-  --secondary-color: #FFFFFF; 
-  --accent-color: #FFD700; 
-  --text-color: #333333; 
-  --background-color: #F0F0F0;
-  --title-background-color: #E6F0F8;
-  --input-border: 2px solid var(--background-color);
+/* ============================================================================
+   The create / edit listing form. Shared by /list and /property/:id/edit.
+   ========================================================================= */
+
+.page-list,
+.page-edit {
+  background: var(--bg);
 }
 
-.page-list {
-  background-color: var(--title-background-color);
-  font-style: italic;
-  min-height: 100vh;
-  margin: 0;
-  padding: 20px;
-}
-
-.page-list .divcenter {
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: var(--title-background-color);
-  color: var(--primary-color);
-  border-radius: 50px;
-  font-size: 1.8rem;
-  text-align: center;
-  width: 90%;
-  max-width: 800px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.page-list .center {
-  background: var(--secondary-color);
-  border-radius: 20px;
-  padding: 1.5rem;
-  margin: 2rem auto;
-  width: 90%;
-  max-width: 800px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-.page-list .compact-group {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.page-list .compact-group > div {
+.pform {
+  width: 100%;
+  max-width: 860px;
+  margin-inline: auto;
+  padding: var(--sp-8) var(--gutter) var(--sp-20);
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: var(--gap-loose);
 }
 
-.page-list .radio-row {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin: 1rem 0;
+.pform__head {
+  margin-bottom: var(--sp-2);
 }
 
-.page-list .radio-group {
+/* Real fieldsets: the grouping is announced, not only drawn. */
+.pform__group {
+  margin: 0;
+  padding: clamp(var(--sp-4), 3vw, var(--sp-6));
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-1), var(--edge-light);
   display: flex;
-  gap: 1rem;
-  align-items: center;
-  padding: 0.8rem;
-  background: var(--background-color);
-  border-radius: 10px;
-  border: var(--input-border);
+  flex-direction: column;
+  gap: var(--gap);
+  min-inline-size: 0;
 }
 
-.page-list .radio-group div {
+.pform__legend {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  gap: var(--sp-2);
+  padding: 0 var(--sp-2);
+  margin-left: calc(-1 * var(--sp-2));
+  font-size: var(--text-title-3);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--text-title-3-ls);
+  color: var(--fg-display);
 }
 
-.page-list .form-group {
+.pform__legend svg {
+  color: var(--brand-text);
+}
+
+.pform__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--gap);
 }
 
-.page-list label {
-  font-weight: 600;
-  color: var(--primary-color);
-  font-size: 0.95rem;
+.pform__span {
+  grid-column: 1 / -1;
 }
 
-.page-list input, .page-list select {
-  width: 90%;
-  padding: 0.8rem;
-  border: var(--input-border);
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+.pform__segments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-loose);
 }
 
-.page-list textarea {
-  width: 90%;
- 
-  padding: 1rem;
-  font-size: 1rem;
-  border: var(--input-border);
-  border-radius: 10px;
-  resize: vertical;
+/* -------------------------------------------------------------- photos */
+.pform__photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.page-list button {
-  background: var(--primary-color);
-  color: var(--secondary-color);
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.pform__photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+
+.pform__photo img {
   width: 100%;
-  max-width: 200px;
-  margin: 1rem auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
 }
 
-.page-list button:hover {
-  background: var(--accent-color);
-  color: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+/* The empty slot is a <label> bound to a hidden file input, so it keeps native
+   keyboard behaviour while looking like a tile. */
+.pform__photo-add {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-sm);
+  color: var(--fg-faint);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 
-.page-list .details-grid {
+.pform__photo-add:hover {
+  border-color: var(--brand);
+  background: var(--brand-tint);
+  color: var(--brand-text);
+}
+
+.pform__photo-add:focus-within {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-color: var(--brand);
+}
+
+.pform__photo-add input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.pform__photo-clear {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  width: 32px;
+  height: 32px;
+}
+
+.pform__cover {
+  position: absolute;
+  bottom: var(--sp-2);
+  left: var(--sp-2);
+  background: var(--photo-plate);
+  border: 1px solid var(--photo-plate-border);
+  color: var(--photo-fg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* -------------------------------------------------------------- submit */
+.pform__submit {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
   display: flex;
-  gap: 2rem;
-  align-items: stretch;
-  margin: 2rem 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+  padding: var(--sp-4) 0 calc(var(--sp-4) + env(safe-area-inset-bottom, 0px));
+  /* A translucent layer with the form scrolling beneath it, rather than an
+     opaque bar clamped to the bottom of the viewport. */
+  background: linear-gradient(to top, var(--bg) 55%, color-mix(in srgb, var(--bg) 0%, transparent));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--brand-border);
 }
 
-.page-list .details-grid > div:first-child {
-  flex: 1;
+@media (max-width: 520px) {
+  .pform__submit .pf-btn {
+    flex: 1 1 100%;
+  }
 }
-
-.page-list .details-grid > div:last-child {
-  flex: 1.5;
-}
-.page-list centerdiv {
-  display: flex;
-  gap: 2rem;
-  align-items: start;
-}
-
-.page-list .centerdiv > div:first-child {
-  flex: 1;
-}
-
-.page-list .centerdiv > div:last-child {
-  flex: 2;
-}
-
-.page-list .grid-container {
-  grid-template-columns: repeat(3, 1fr);
-}
-.page-list .grid-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-        gap: 10px;
-        width: 100%;
-        max-width: 350px;
-        justify-content: center;
-      }
-      
-      .page-list .grid-container .image-upload {
-        grid-column: span 1; /* Each image takes 1 column */
-      }
-      
-      .page-list .custom-file-upload {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100px;
-        height: 100px;
-        background: #f0f0f0;
-        border: 2px dashed #ccc;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 14px;
-        text-align: center;
-        position: relative;
-      }
-      
-      .page-list .custom-file-upload input {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        cursor: pointer;
-      }
-      
-      .page-list .preview {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 8px;
-        display: none;
-        border: 1px solid #ccc; /* Missing semicolon was here */
-      }
-      .page-list .delete-btn {
-        background-color: #ff4d4d; /* Red background for delete button */
-        color: var(--secondary-color); /* White text */
-        padding: 0.5rem 1rem; /* Smaller padding for a more compact button */
-        border: none;
-        border-radius: 10px;
-        font-size: 1rem; /* Slightly smaller text */
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: auto; /* Let the button width adjust to the content */
-        min-width: 80px; /* Set a minimum width to prevent it from becoming too small */
-        margin: 1rem auto;
-        display: block;
-        text-align: center; /* Center the text */
-      }
-      
-      .page-list .delete-btn:hover {
-        background-color: #ff3333; /* Darker red on hover */
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      }
-      
-

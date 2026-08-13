@@ -1,191 +1,276 @@
-/* scoped */
-/* Full-page background */
-.page-welcome #backgroundContainer {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  z-index: -1; /* Ensure it stays behind the content */
+/* Welcome — the entrance. One photograph, one graded scrim, two ways in. */
+
+.page-welcome {
+  min-height: 0;
 }
 
-@font-face {
-  font-family: 'Carattere';
-  src: url('/KumarOne-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+.welcome {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-10) var(--gutter) calc(var(--sp-10) + env(safe-area-inset-bottom, 0px));
+  isolation: isolate;
+  overflow: hidden;
+  transition: opacity var(--dur) var(--ease-in);
 }
 
-/* Background image (Apartment with blur effect) */
-.page-welcome #backgroundContainer::before {
+.welcome::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("/pictures/apartment.jpeg");
+  inset: 0;
+  z-index: -2;
+  background-image: url("/pictures/door.jpeg");
   background-size: cover;
-  background-position: center;
-  filter: blur(8px);
+  background-position: center 40%;
+}
+
+/* Graded, not uniform: the photograph stays a photograph, the text side goes
+   dark enough for white type to clear 4.5:1 comfortably. */
+.welcome::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   z-index: -1;
-  pointer-events: none;
+  background: linear-gradient(
+      260deg,
+      rgba(0, 9, 26, 0.92) 0%,
+      rgba(0, 9, 26, 0.8) 42%,
+      rgba(0, 9, 26, 0.44) 72%,
+      rgba(0, 9, 26, 0.6) 100%
+    );
 }
 
-/* Welcome Text */
-.page-welcome #welcomeText {
-  position: absolute;
-  top: 45%;
-  left: 70%;
-  transform: translate(-50%, -50%);
-  text-align: left;
-  color: white;
-  font-family: Arial, sans-serif;
-  z-index: 2;
-  max-width: 800px;
-  white-space: nowrap;
+/* Leaving: the whole scene recedes and fades, so arriving at the sign-in screen
+   reads as passing through rather than a hard cut. */
+.welcome.is-leaving {
+  opacity: 0;
 }
 
-/* Font for Logo */
-.page-welcome .logo {
-  font-family: 'Carattere', sans-serif;
-  color: #ffffff;
-  font-size: 40px;
+.welcome.is-leaving .welcome__inner {
+  transform: scale(0.985) translateY(-6px);
 }
 
-/* Big title */
-.page-welcome #welcomeText h1 {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-  white-space: nowrap;
+.welcome__inner {
+  width: 100%;
+  max-width: var(--container);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(var(--sp-8), 6vw, var(--sp-20));
+  transition: transform var(--dur) var(--ease-in);
 }
 
-.page-welcome .yellow {
-  color: #ffd700;
+.welcome__copy {
+  grid-column: 2;
+  justify-self: end;
+  max-width: 34rem;
+  color: var(--photo-fg);
 }
 
-/* Background image (Hall with door) */
-.page-welcome .background-door {
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
+.welcome__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  padding: 0.3em 0.8em;
+  border-radius: var(--r-full);
+  background: var(--photo-fill);
+  border: 1px solid var(--photo-border);
+  font-size: var(--text-caption);
+  letter-spacing: 0.03em;
+  font-weight: var(--weight-medium);
+  color: var(--photo-fg);
 }
 
-/* Overlay door (Clickable to reveal buttons) */
-.page-welcome .overlay-door {
-  position: absolute;
-  width: 19vw;  /* Adjusted for responsiveness */
-  max-width: 340px; /* Prevents it from being too large on big screens */
-  height: auto;
-  cursor: pointer;
-  z-index: 2;
-  transition: opacity 0.1s ease-in-out, transform 0.3s ease;
-  
-  /* Positioning the overlay door correctly */
-  top: 55%;
-  left: 32.5%;
-  transform: translate(-50%, -50%);
+/* Display size with negative tracking and tight leading — large text reads too
+   loose and too airy at body-copy values. */
+.welcome__title {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  line-height: var(--text-display-lh);
+  letter-spacing: var(--text-display-ls);
+  font-weight: var(--weight-bold);
+  color: var(--photo-fg);
+  text-wrap: balance;
 }
 
-/* Hover effect to make the door slightly bigger */
-.page-welcome .overlay-door:hover {
-  transform: translate(-50%, -50%) scale(1.02);
+/* The wordmark's second half, in the brand blue lifted to the dark-mode step so
+   it stays legible over a photograph in either theme. */
+.welcome__title em {
+  font-style: normal;
+  color: var(--blue-300);
 }
 
-/* Login Screenshot (Initially Hidden) */
-.page-welcome #loginScreenshot {
+.welcome__lede {
+  margin-top: var(--sp-4);
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--photo-fg-muted);
+}
+
+.welcome__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-8);
+}
+
+/* A translucent secondary sitting on a photograph: a defined light border keeps
+   the edge readable wherever the image happens to be bright. */
+.welcome__ghost {
+  background: var(--photo-fill);
+  border-color: var(--photo-border);
+  color: var(--photo-fg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.welcome__ghost:hover {
+  background: var(--photo-fill-hover);
+  border-color: var(--photo-border-strong);
+  color: var(--photo-fg);
+}
+
+.welcome__signin {
+  margin-top: var(--sp-5);
+  font-size: var(--text-body-sm);
+  color: var(--photo-fg-muted);
+}
+
+.welcome__signin a {
+  color: var(--blue-300);
+  font-weight: var(--weight-semibold);
+}
+
+.welcome__signin a:hover {
+  color: var(--photo-fg);
+}
+
+/* ------------------------------------------------------------------- door */
+.welcome__door {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  opacity: 0;
-  z-index: 3;
-  transition: opacity 1s ease-in-out;
-}
-
-/* Hide elements with fade effect */
-.page-welcome .fade-out {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Buttons */
-.page-welcome button {
-  margin: 10px;
-  padding: 12px 20px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
+  /* only-door.jpeg maps to x=517, y=116 in door.jpeg. These formulas apply
+     that crop after background-size: cover at either viewport ratio. */
+  top: calc(40dvh - max(12.18vw, 27.94dvh));
+  left: calc(50vw - max(26.6vw, 61dvh));
+  grid-column: 1;
+  grid-row: 1;
+  display: block;
+  width: max(18.23vw, 41.8dvh);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
+  /* Press feedback is on pointer-down and is instant. */
+  transition: transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
 }
 
-/* Button Hover Effects */
-.page-welcome button:hover {
-  background-color: var(--accent-color);
-  transform: scale(1.05);
+.welcome__door img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: translate(-50%, -55%);
+.welcome__door:hover {
+  box-shadow: 0 0 0 2px var(--blue-300);
+}
+
+.welcome__door:active {
+  transform: scale(0.985);
+}
+
+.welcome__door:focus-visible {
+  outline: 3px solid var(--blue-300);
+  outline-offset: 4px;
+}
+
+/* Affordance, so the door does not depend on hover to look interactive. */
+.welcome__door-hint {
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-4);
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.4em 0.9em;
+  border-radius: var(--r-full);
+  background: var(--photo-plate);
+  border: 1px solid var(--photo-plate-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  color: var(--photo-fg);
+}
+
+/* --------------------------------------------------------------- responsive */
+@media (max-width: 900px) {
+  .welcome__inner {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+    gap: var(--sp-8);
   }
-  to {
-      opacity: 1;
-      transform: translate(-50%, -50%);
+
+  .welcome__copy {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .welcome__door {
+    position: relative;
+    top: auto;
+    left: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: min(40dvh, 70vw);
   }
 }
 
-/* Responsive Adjustments */
-@media (max-width: 1024px) {
-  .page-welcome #welcomeText {
-    left: 60%; /* Adjust text placement */
-    font-size: 20px;
+@media (max-width: 560px) {
+  .welcome {
+    padding-block: var(--sp-8);
+    place-items: start center;
   }
-  
-  .page-welcome .overlay-door {
-    width: 20vw; /* Increase size slightly on smaller screens */
-    top: 55%;
+
+  .welcome__actions .pf-btn {
+    flex: 1 1 100%;
+  }
+
+  .welcome__door {
+    width: min(36dvh, 64vw);
   }
 }
 
-@media (max-width: 768px) {
-  .page-welcome #welcomeText {
-    left: 50%;
-    text-align: center;
-    font-size: 18px;
+/* Landscape phones: the door would push the copy off-screen, so it steps aside. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .welcome {
+    place-items: center;
+    padding-block: var(--sp-6);
   }
-  
-  .page-welcome .overlay-door {
-    width: 25vw;
-    top: 58%;
+
+  .welcome__door {
+    width: min(150px, 24vw);
+  }
+
+  .welcome__lede {
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  .page-welcome #welcomeText {
-    font-size: 16px;
+@media (prefers-reduced-motion: reduce) {
+  .welcome.is-leaving .welcome__inner {
+    transform: none;
   }
 
-  .page-welcome .overlay-door {
-    width: 35vw;
-    top: 60%;
-  }
 }

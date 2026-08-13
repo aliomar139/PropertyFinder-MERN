@@ -1,0 +1,129 @@
+/* Extras shared by the sign-in / sign-up / password / verification screens.
+   The bulk of the layout lives in the .pf-auth block in components.css. */
+
+.pf-auth__legal {
+  margin-top: var(--sp-4);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-lh);
+  color: var(--fg-faint);
+}
+
+/* Reset-code entry: a short, centred, wide-tracked field reads as a code rather
+   than as ordinary text, and tabular figures keep the box from twitching. */
+.pf-code-input {
+  font-family: var(--font-mono);
+  font-size: 1.375rem;
+  letter-spacing: 0.32em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  padding-inline: var(--sp-2);
+}
+
+/* Two-step progress for the reset flow. Position is stated in text as well as
+   colour so it does not depend on hue alone. */
+.pf-steps {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+  font-size: var(--text-caption);
+  color: var(--fg-muted);
+}
+
+.pf-steps__dot {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-full);
+  background: var(--surface-brand-subtle);
+  border: 1px solid var(--brand-border);
+  font-size: 0.6875rem;
+  font-weight: var(--weight-bold);
+  color: var(--fg-muted);
+}
+
+.pf-steps__dot[data-state="current"] {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--fg-on-brand);
+}
+
+.pf-steps__dot[data-state="done"] {
+  background: var(--success-tint);
+  border-color: color-mix(in srgb, var(--success) 40%, transparent);
+  color: var(--success-ink);
+}
+
+.pf-steps__bar {
+  flex: 1;
+  height: 2px;
+  border-radius: var(--r-full);
+  background: var(--brand-border);
+}
+
+.pf-steps__bar[data-state="done"] {
+  background: color-mix(in srgb, var(--success) 55%, transparent);
+}
+
+/* File chooser: the native input is hidden behind a real, labelled drop zone so
+   it can be styled without losing keyboard operation. */
+.pf-filedrop {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border: 1px dashed var(--brand-border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface-brand-subtle);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.pf-filedrop:hover {
+  border-color: var(--brand);
+  background: var(--brand-tint);
+}
+
+.pf-filedrop:focus-within {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-color: var(--brand);
+}
+
+.pf-filedrop input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.pf-filedrop__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--r-full);
+  background: var(--surface);
+  border: 1px solid var(--brand-border);
+  color: var(--brand-text);
+}
+
+.pf-filedrop__text {
+  min-width: 0;
+}
+
+.pf-filedrop__name {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.pf-filedrop__meta {
+  font-size: var(--text-caption);
+  color: var(--fg-muted);
+}

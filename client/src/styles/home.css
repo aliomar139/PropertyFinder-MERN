@@ -1,417 +1,545 @@
-/* scoped */
+/* ============================================================================
+   Browse / favourites / my-listings surfaces: the listing grid, the card, the
+   filter panel and the compose action.
+
+   The old page put every card on a blurred full-page photograph behind an 80%
+   white veil. That cost a full-viewport repaint, muddied every edge, and left
+   body text sitting at roughly 3.5:1 in places. Photography now lives where it
+   belongs — inside the cards — and the page itself is quiet.
+   ========================================================================= */
+
 .page-home {
-    --primary-color: #002366; /* Navy Blue */
-    --secondary-color: #FFD700; /* Gold */
-    --text-color: #333333; /* Charcoal Gray */
-    --background-color: #F0F0F0; /* Light Gray */
-    --hover-color: #FFD700; /* Hover color for buttons and links */
+  background: var(--bg);
 }
 
-/* Navbar Styling */
-.page-home .navbar {
-    background-color: var(--primary-color); /* Navy Blue background */
-    padding: 10px 20px;
-    position: fixed;
-    width: 100%;
-    height: 10%;
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Keep navbar on top */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a small shadow for depth */
+.home__body {
+  padding-top: var(--section);
+  padding-bottom: var(--sp-4);
 }
 
-.page-home .navbar-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.home__error {
+  margin-top: var(--gap-loose);
 }
 
-.page-home .nav-button {
-    background: none;
-    border: none;
-    color: white; /* Default color */
-    font-size: 18px;
-    cursor: pointer;
-    padding: 10px 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.home__retry {
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  font-weight: var(--weight-semibold);
 }
 
-.page-home .nav-button.active {
-    background-color: var(--secondary-color); /* Gold color for active button */
-    color: var(--primary-color);
-    font-weight: bold;
+/* ============================== FILTERS =================================
+   The discovery controls are a brand-tinted region, not another white card on
+   a white page. Pale blue in light mode, a navy panel in dark: it reads as the
+   product's own working surface, and it separates "the controls" from "the
+   results" without needing a heavier border or a second shadow.
+
+   The tint stays subtle on purpose — the photographs below are still the thing
+   people came for. */
+.pfilters {
+  margin-bottom: var(--gap-loose);
+  background: var(--surface-brand-subtle);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1), var(--edge-light);
+  overflow: hidden;
 }
 
-.page-home .nav-button.active a {
-    color: #002366 !important;
-}
-.page-home .nav-button:hover {
-    background-color: var(--secondary-color); /* Gold hover effect */
-    border-radius: 5px;
+.pfilters__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--brand-border);
 }
 
-.page-home .logo {
-    height: 80px;
-    font-size: 25px;
-    display: flex;
-    align-items: center;
-    margin-right: 100px;
-    color: #ffffff;
-    font-family: 'Carattere', sans-serif;
+/* The heading takes the brand ink, so the region is labelled in the product's
+   colour rather than in generic grey. */
+.pfilters__heading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-overline);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--text-overline-ls);
+  text-transform: uppercase;
+  color: var(--brand-text);
 }
-.page-home .yellow {
-    color: #ffd700;
+
+.pfilters__bar > .pf-caption {
+  margin-left: auto;
+}
+
+/* Applied filters echoed back. Each chip is its own remove button, so undoing
+   one choice never means re-picking the other eight. */
+.pfilters__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  list-style: none;
+  border-bottom: 1px solid var(--brand-border);
+}
+
+/* An applied filter is a live choice, so it is filled blue rather than grey.
+   Hovering reveals that it is also the remove control, which is why the hover
+   state — and only the hover state — turns to danger. */
+.pfilters__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 32px;
+  padding: 0 var(--sp-3);
+  border: 1px solid var(--brand-border-strong);
+  border-radius: var(--r-full);
+  background: var(--surface-brand);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--brand-text);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.pfilters__chip:hover {
+  background: var(--danger-tint);
+  border-color: color-mix(in srgb, var(--danger) 34%, transparent);
+  color: var(--danger-hover);
+}
+
+.pfilters__chip-key {
+  color: var(--brand-text);
+  font-weight: var(--weight-regular);
+  opacity: 0.8;
+}
+
+.pfilters__chip--clear {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border-strong);
+  color: var(--fg-secondary);
+}
+
+.pfilters__body {
+  padding: var(--sp-4);
+}
+
+.pfilters__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--sp-4);
+}
+
+.pfilters__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--brand-border);
+}
+
+/* ============================= RESULTS BAR ==============================
+   The seam between "what you asked for" and "what you got". It is a rule, not
+   a card: another bordered panel between the filter panel and the grid would
+   read as a third competing surface, and the only job here is to label the
+   results that follow. */
+.results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-bottom: var(--gap-loose);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.results-bar__count {
+  font-size: var(--text-body-sm);
+  color: var(--fg-secondary);
+}
+
+.results-bar__count strong {
+  font-weight: var(--weight-bold);
+  color: var(--fg-display);
+}
+
+/* The whole thing is one <label>, so the icon and the word "Sort" are part of
+   the select's hit area rather than decoration sitting next to it. */
+.results-bar__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 40px;
+  padding-left: var(--sp-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  /* Matches the select inside it, so the two never disagree by a surface step. */
+  background-color: var(--control-bg);
+  color: var(--fg-muted);
+  transition: border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.results-bar__sort:hover {
+  border-color: var(--brand);
+}
+
+/* The ring is drawn on the wrapper because the native select inside is the
+   thing that actually receives focus, and a ring around only the select would
+   leave the icon and label visually outside the focused control. */
+.results-bar__sort:focus-within {
+  border-color: var(--focus-ring);
+  box-shadow: var(--shadow-focus);
+}
+
+.results-bar__sort-label {
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-secondary);
+}
+
+/* This select was the worst case of the native-popup problem: transparent
+   background plus inherited page colour meant Chrome handed the option list no
+   background at all, and in dark mode the near-white text landed on the UA's
+   white popup. It now carries the same explicit control/option pairing as
+   .pf-select — the wrapper supplies the visual chrome, the select supplies the
+   colours the OS needs. */
+.results-bar__select {
+  min-height: 38px;
+  padding: 0 var(--sp-3) 0 var(--sp-1);
+  border: none;
+  border-radius: var(--r-sm);
+  background-color: var(--control-bg);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  color: var(--control-fg);
+  cursor: pointer;
+}
+
+.results-bar__select option {
+  color: var(--option-fg);
+  background-color: var(--option-bg);
+  font-weight: var(--weight-regular);
+}
+
+/* The ring is drawn on the wrapper, so the select itself must not paint a
+   second one inside it. */
+.results-bar__select:focus-visible {
+  outline: none;
+}
+
+@media (forced-colors: active) {
+  .results-bar__select {
+    background-color: Canvas;
+    color: CanvasText;
+  }
+}
+
+/* ============================ LISTING GRID ==============================
+   auto-fill with a minimum track, so the column count follows the available
+   width instead of being fixed at four and overflowing the viewport. */
+.pgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(268px, 100%), 1fr));
+  gap: clamp(var(--sp-4), 2vw, var(--sp-6));
+}
+
+.pgrid__more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-8);
+}
+
+/* ================================ CARD ================================== */
+.pcard {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  height: 100%;
+  transition: box-shadow var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.pcard__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.pcard:hover {
+  /* A blue edge rather than a darker grey one: hover is an interactive state,
+     and blue is what interactivity looks like everywhere else in the product. */
+  border-color: var(--brand-border-strong);
+  box-shadow: var(--shadow-3);
+  /* A small, honest lift. The old card jumped 10px, which pushed it into its
+     neighbour's space and made the whole grid feel unstable on a fast pass. */
+  transform: translateY(-2px);
+}
+
+.pcard:active {
+  transform: translateY(-1px) scale(0.995);
+  box-shadow: var(--shadow-2);
+  transition-duration: var(--dur-instant);
+}
+
+/* The ring sits on the card, not on the inner link, so focus reads as "this
+   card" rather than tracing the text box inside it. */
+.pcard:focus-within {
+  border-color: var(--focus-ring);
+  box-shadow: var(--shadow-focus);
+}
+
+.pcard__link:focus-visible {
+  outline: none;
+}
+
+/* Fixed aspect ratio reserves the exact box before the image decodes, so the
+   grid never jumps as photos arrive. */
+.pcard__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.pcard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.pcard:hover .pcard__media img {
+  transform: scale(1.035);
+}
+
+.pcard__noimg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1);
+  height: 100%;
+  color: var(--fg-faint);
+}
+
+/* Status badge over a photograph: a translucent dark plate keeps it legible
+   whatever is behind it, without a heavy solid block. */
+.pcard__status {
+  position: absolute;
+  top: var(--sp-3);
+  left: var(--sp-3);
+  background: var(--photo-plate);
+  color: var(--photo-fg);
+  border: 1px solid var(--photo-plate-border);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  letter-spacing: 0.03em;
+}
+
+.pcard__status--rent {
+  background: var(--photo-plate-brand);
+}
+
+/* ------------------------------------------------------------------- save
+   Sits above the link layer, opposite the status badge. 44px of target inside
+   a 36px visual, so the touch area meets the minimum without a chip large
+   enough to cover the photograph. */
+.pcard__save {
+  position: absolute;
+  top: calc(var(--sp-3) - 4px);
+  right: calc(var(--sp-3) - 4px);
+  z-index: var(--z-raised);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-full);
+  color: var(--photo-fg);
+  transition: transform var(--dur-instant) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+/* The plate is drawn as a pseudo-element so the button's hit area can stay 44px
+   while the visible chip stays 36px. */
+.pcard__save::before {
+  content: "";
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  background: var(--photo-plate);
+  border: 1px solid var(--photo-plate-border);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pcard__save:hover::before {
+  background: var(--photo-plate-brand);
+}
+
+.pcard__save:active {
+  transform: scale(0.9);
+}
+
+.pcard__save-icon {
+  position: relative;
+}
+
+/* Filled heart plus the pressed state on the button itself: the saved state is
+   never carried by colour alone. */
+.pcard__save[aria-pressed="true"] .pcard__save-icon {
+  fill: currentColor;
+  animation: pcard-beat var(--dur-slow) var(--ease-spring);
+}
+
+@keyframes pcard-beat {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard__save[aria-pressed="true"] .pcard__save-icon {
+    animation: none;
+  }
+}
+
+.pcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-4);
+  flex: 1;
+}
+
+.pcard__price {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.015em;
+  /* The price is the single most important number on the card, so it gets the
+     brand's authority colour rather than body ink. */
+  color: var(--fg-display);
+}
+
+.pcard__per {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+  color: var(--fg-muted);
+}
+
+.pcard__title {
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.003em;
+  color: var(--fg-secondary);
+  /* Two lines, then ellipsis — wrapping is preferred, but a runaway title must
+     not stretch one card taller than the rest of its row. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pcard__location {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-lh);
+  color: var(--fg-muted);
+}
+
+.pcard__location svg {
+  flex: none;
+  margin-top: 0.1em;
+}
+
+.pcard__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1) var(--sp-4);
+  margin: auto 0 0;
+  padding: var(--sp-3) 0 0;
+  border-top: 1px solid var(--divider);
+  list-style: none;
+  font-size: var(--text-caption);
+  color: var(--fg-secondary);
+}
+
+.pcard__facts li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.pcard__facts svg {
+  color: var(--fg-faint);
+}
+
+.pcard--skeleton .pcard__body {
+  gap: var(--sp-3);
+}
+
+.pcard--skeleton:hover {
+  transform: none;
+  box-shadow: var(--shadow-1);
+}
+
+/* ========================= COMPOSE ACTION (FAB) ========================= */
+.home__fab {
+  display: none;
+}
+
+@media (max-width: 719px) {
+  /* Header CTA scrolls away on a phone, so the action becomes persistent —
+     clear of the home-indicator area, and a full 56px target. */
+  .home__list-cta {
+    display: none;
   }
 
-.page-home .search-bar {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border-radius: 20px;
-    padding: 5px 10px;
-    width: 270px;
-    margin-right: 100px;
-}
-
-.page-home .search-bar input {
-    border: 1px solid #ccc;
-    padding: 8px 12px;
-    border-radius: 15px;
-    width: 85%;
-    font-size: 16px;
-}
-
-.page-home .search-bar button {
-    border: none;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.page-home .search-bar button:hover {
-    background-color: var(--secondary-color);
-}
-
-/* Content Styling */
-.page-home {
-    
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    position: relative; /* Make the body a reference point for absolute positioning */
-}
-
-.page-home::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("/pictures/apartment.jpeg"); /* Your background image */
-    background-size: cover; /* Ensure the image covers the entire page */
-    background-position: center; /* Center the background image */
-    filter: blur(5px); /* Apply blur to the background */
-    z-index: -1; /* Put the blurred background behind the content */
-}
-
-.page-home .content {
-    position: relative; /* Make sure content appears above the background */
-    margin-top: 60px; /* Add margin to push content below the navbar */
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for content */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-/* Filter Section */
-.page-home .filter-section {
-    margin: 3% 0;
-    padding: 2%;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
-}
-
-.page-home .filter-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3%;
-    align-items: flex-end;
-}
-
-.page-home .filter-group {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    flex: 1;
-    min-width: 150px;
-}
-
-.page-home .filter-group label {
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.page-home .filter-group select
-{
-    width: 80%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;  
-}
-.page-home .filter-group input {
-    width: 60%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
-}
-.page-home .apply-filters-btn {
-    padding: 10px 20px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-    align-self: flex-end;
-}
-.page-home .apply-filters-btn:hover {
-    background-color: var(--secondary-color);
-}
-
-/* Grid of Apartments (or Products) */
-.page-home .scroll-container {
+  .home__fab {
+    position: fixed;
+    right: var(--gutter);
+    bottom: calc(var(--sp-5) + env(safe-area-inset-bottom, 0px));
+    z-index: var(--z-sticky);
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 Columns */
-    gap: 20px;
-    width: 90%;
-    padding: 20px;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--r-full);
+    background: var(--brand);
+    color: var(--fg-on-brand);
+    box-shadow: var(--shadow-4);
+    transition: background-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-instant) var(--ease-out);
+  }
+
+  .home__fab:hover {
+    background: var(--brand-hover);
+    color: var(--fg-on-brand);
+  }
+
+  .home__fab:active {
+    transform: scale(0.93);
+  }
 }
 
-.page-home .scroll-item {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-    height: 350px; /* Fix height */
-    display: none;
-}
-.page-home .scroll-item:nth-child(-n+8) {
-    display: block;
-}
-.page-home .scroll-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-bottom: 5px solid #f0f0f0;
-}
-
-.page-home .scroll-item .details {
-    padding: 2px;
-    text-align: center;
-    flex-grow: 1;
-}
-
-.page-home .scroll-item .details h4 {
-    font-size: 1.2rem;
-    margin: 10px 0;
-}
-
-.page-home .scroll-item .details p {
-    font-size: 1rem;
-    color: #777;
-}
-
-.page-home .scroll-item:hover {
-    transform: translateY(-10px);
-}
-
-.page-home .scroll-item:hover .details {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* See More Button */
-.page-home #see-more {
-    padding: 10px 20px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.page-home #see-more:hover {
-    background-color: var(--secondary-color);
-}
-
-/* Add Property Button */
-.page-home .add-property-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--primary-color);
-    color: white;
-    font-size: 30px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    text-decoration: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-}
-
-.page-home .add-property-btn:hover {
-    background-color: var(--hover-color);
-}
-
-.page-home .plus-icon {
-    font-weight: bold;
-}
-
-.page-home .modal {
-    display: none; /* Hide by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Transparent background */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Make sure it's on top */
-}
-
-.page-home .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.page-home button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.page-home #confirm-logout {
-    background-color: red;
-    color: white;
-}
-
-.page-home #cancel-logout {
-    background-color: grey;
-    color: white;
-}
-
-.page-home .add-property-btn:hover {
-    background-color: #0056b3;
-}
-
-.page-home .plus-icon {
-    font-weight: bold;
-}
-
-/* Footer Styling */
-.page-home footer { 
-    background-color: var(--primary-color);
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 14px;
-    width: 100%;
-}
-
-
-.page-home .property-link {
-    display: block;  /* Makes the anchor tag act as a block element */
-    text-decoration: none;  /* Removes the default underline */
-}
-
-.page-home .scroll-item {
-    cursor: pointer;  /* Indicates that it's clickable */
-}
-.page-home .delete-success-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #4CAF50;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 5px;
-    z-index: 9999;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    animation: fadeInOut 2s ease-in-out;
-    opacity: 0;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
-}
-.page-home .sorting-group {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 4%;
-    flex: 2;
-    min-width: 150px;
-}
-
-.page-home .sorting-group label {
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.page-home .sorting-group select
-{
-    width: 24%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;  
-}
-.page-home .sorting-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between dropdowns */
-}
-
-.page-home .sorting-container label {
-    margin-right: 5px;
-}
-
-.page-home .sorting-container select {
-    margin-right: 15px;
+/* ======================== ACCOUNT / SIMPLE PAGES =======================
+   Shared by favourites and my-listings, which reuse this stylesheet. */
+.home__section-head {
+  margin-bottom: var(--gap-loose);
 }

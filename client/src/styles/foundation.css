@@ -1,0 +1,292 @@
+/* ============================================================================
+   Foundation: reset, base element styles, focus policy, motion policy.
+   Depends on tokens.css.
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Type sizes are in rem so the layout scales with the user's text setting
+     rather than clipping when it grows. */
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  line-height: var(--text-body-lh);
+  letter-spacing: var(--text-body-ls);
+  font-weight: var(--weight-regular);
+  color: var(--fg);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis-weight: none;
+  min-height: 100dvh;
+}
+
+#root {
+  isolation: isolate;
+}
+
+/* Every routed page fills the viewport. dvh, not vh: mobile browser chrome
+   changes the visible height and 100vh overflows behind it. */
+[class^="page-"],
+[class*=" page-"] {
+  min-height: 100dvh;
+  box-sizing: border-box;
+}
+
+/* Welcome page: #backgroundContainer (and the clickable door inside it) sits at
+   z-index -1, i.e. BEHIND the page wrapper. If the wrapper had height its
+   transparent box would swallow all clicks and the door would be unclickable. */
+.page-welcome {
+  min-height: 0;
+}
+
+/* --------------------------------------------------------------- typography */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-title-1);
+  line-height: var(--text-title-1-lh);
+  letter-spacing: var(--text-title-1-ls);
+}
+
+h2 {
+  font-size: var(--text-title-2);
+  line-height: var(--text-title-2-lh);
+  letter-spacing: var(--text-title-2-ls);
+}
+
+h3 {
+  font-size: var(--text-title-3);
+  line-height: var(--text-title-3-lh);
+  letter-spacing: var(--text-title-3-ls);
+}
+
+h4, h5, h6 {
+  font-size: var(--text-body);
+  line-height: var(--text-body-lh);
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+strong, b {
+  font-weight: var(--weight-semibold);
+}
+
+small {
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-lh);
+  letter-spacing: var(--text-caption-ls);
+}
+
+a {
+  color: var(--brand-text);
+  text-decoration-color: color-mix(in srgb, var(--brand-text) 40%, transparent);
+  text-underline-offset: 0.18em;
+  transition: color var(--dur-fast) var(--ease-out),
+    text-decoration-color var(--dur-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--brand-hover);
+  text-decoration-color: currentColor;
+}
+
+/* Tabular figures wherever numbers sit in a column, a price, or a counter, so
+   they never shift width as the value changes. */
+.pf-num,
+td,
+th,
+.pf-price {
+  font-variant-numeric: tabular-nums;
+}
+
+ul, ol {
+  margin: 0;
+  padding-left: 1.25em;
+}
+
+img,
+picture,
+video,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---------------------------------------------------------------- controls */
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  margin: 0;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* Removes the ~300ms tap delay without disabling pinch-zoom. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ------------------------------------------------------------------- focus
+   Focus is never removed — only moved to :focus-visible so pointer users do
+   not see a ring on click while keyboard users always do. */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+/* The router parks focus on <main> after a route change so the reading position
+   follows the navigation. That is a programmatic move, not a keyboard landing,
+   so it should not paint a ring around the whole page. */
+main:focus,
+main:focus-visible {
+  outline: none;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand) 22%, transparent);
+  color: var(--fg);
+}
+
+/* ------------------------------------------------------------------ layout */
+
+.pf-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.pf-container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.pf-measure {
+  max-width: var(--measure);
+}
+
+.pf-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* Content offset for the fixed app bar, including the notch/status area.
+   Put this on the <main> wrapper and page spacing on a child element: both set
+   padding-top, so sharing one element would let the later rule win and slide
+   the page under the bar. */
+.pf-below-appbar {
+  padding-top: calc(var(--appbar-h) + env(safe-area-inset-top, 0px));
+}
+
+/* Visually hidden but available to screen readers. */
+.pf-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: hidden until focused, then pinned top-left. */
+.pf-skip-link {
+  position: fixed;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: var(--z-toast);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--fg);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  box-shadow: var(--shadow-3);
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.pf-skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------ motion policy
+   Reduced motion is not "no feedback" — transforms and springs are replaced by
+   short opacity cross-fades, and all overshoot is dropped. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--dur-fast) !important;
+    transition-property: opacity, background-color, border-color, color,
+      box-shadow, fill, stroke !important;
+  }
+
+  :root {
+    --ease-spring: var(--ease-out);
+  }
+}

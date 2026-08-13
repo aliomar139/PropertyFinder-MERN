@@ -1,63 +1,104 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../../api/client';
-import AdminNavbar from './AdminNavbar.jsx';
+import api, { errMsg } from '../../api/client';
+import AdminPage from './AdminPage.jsx';
+import Button from '../../components/ui/Button.jsx';
+import { ConfirmDialog } from '../../components/ui/Modal.jsx';
 import '../../styles/reports.css';
 
-// reports.php — all reports with Ignore (delete) action
+const COLUMNS = ['ID', 'Reported by', 'Owner', 'Listing', 'Reason', 'Action'];
+
 export default function Reports() {
   const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [pending, setPending] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [toast, setToast] = useState('');
+  const [tone, setTone] = useState('success');
 
-  const load = () => api.get('/reports').then(({ data }) => setReports(data.reports)).catch(() => {});
-  useEffect(() => { load(); }, []);
+  const load = () =>
+    api
+      .get('/reports')
+      .then(({ data }) => setReports(data.reports))
+      .catch(() => {})
+      .finally(() => setLoading(false));
 
-  async function ignore(id) {
-    if (!window.confirm('Are you sure you want to ignore this report?')) return;
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function dismiss() {
+    setBusy(true);
     try {
-      await api.delete(`/reports/${id}`);
+      await api.delete(`/reports/${pending.id}`);
+      setTone('success');
+      setToast('Report dismissed.');
       load();
-    } catch { /* noop */ }
+    } catch (err) {
+      setTone('error');
+      setToast(errMsg(err));
+    } finally {
+      setBusy(false);
+      setPending(null);
+    }
   }
 
   return (
-    <div className="page-reports">
-      <AdminNavbar />
-      <div className="content">
-        <table className="property-table">
-          <thead>
-            <tr>
-              <th>Report Id</th><th>Reporting User</th><th>Reported User</th>
-              <th>Reported Property</th><th>Reason Message</th><th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reports.length ? reports.map((r) => (
-              <tr key={r.id}>
-                <td>{r.id.slice(-6)}</td>
-                <td>
-                  {r.reportingUser ? (
-                    <Link to={`/users/${r.reportingUser.id}`} className="view-details-link">
-                      {r.reportingUser.firstname} {r.reportingUser.lastname}
-                    </Link>
-                  ) : '—'}
-                </td>
-                <td>
-                  {r.reportedUser ? (
-                    <Link to={`/users/${r.reportedUser.id}`} className="view-details-link">
-                      {r.reportedUser.firstname} {r.reportedUser.lastname}
-                    </Link>
-                  ) : '—'}
-                </td>
-                <td><Link to={`/property/${r.property.id}`} className="view-details-link">View Details</Link></td>
-                <td>{r.reason}</td>
-                <td><button className="ban-btn" onClick={() => ignore(r.id)}>Ignore</button></td>
-              </tr>
-            )) : (
-              <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px 0', color: '#666' }}>No reports found</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      <AdminPage
+        title="Reports"
+        description="Listings that users have flagged. Open the listing to judge the complaint before acting."
+        columns={COLUMNS}
+        rows={reports}
+        loading={loading}
+        emptyText="No open reports. Nothing needs your attention."
+        toast={toast}
+        toastTone={tone}
+        onToastDismiss={() => setToast('')}
+        renderRow={(r) => (
+          <tr key={r.id}>
+            <td className="pf-table__id">{r.id.slice(-6)}</td>
+            <td>
+              {r.reportingUser ? (
+                <Link to={`/users/${r.reportingUser.id}`}>
+                  {r.reportingUser.firstname} {r.reportingUser.lastname}
+                </Link>
+              ) : (
+                <span className="pf-muted">—</span>
+              )}
+            </td>
+            <td>
+              {r.reportedUser ? (
+                <Link to={`/users/${r.reportedUser.id}`}>
+                  {r.reportedUser.firstname} {r.reportedUser.lastname}
+                </Link>
+              ) : (
+                <span className="pf-muted">—</span>
+              )}
+            </td>
+            <td>
+              <Link to={`/property/${r.property.id}`}>Open listing</Link>
+            </td>
+            <td className="admin__reason">{r.reason}</td>
+            <td>
+              <Button variant="ghost" size="sm" icon="x" onClick={() => setPending(r)}>
+                Dismiss
+              </Button>
+            </td>
+          </tr>
+        )}
+      />
+
+      <ConfirmDialog
+        open={!!pending}
+        onClose={() => setPending(null)}
+        onConfirm={dismiss}
+        busy={busy}
+        title="Dismiss this report?"
+        description="The report is deleted and the listing stays published. The person who reported it is not notified."
+        confirmLabel="Dismiss report"
+        cancelLabel="Keep it"
+      />
+    </>
   );
 }

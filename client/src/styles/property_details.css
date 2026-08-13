@@ -1,432 +1,441 @@
-/* scoped */
-/* Root variables */
+/* ============================================================================
+   Property detail — gallery on the left, the decision column on the right.
+   ========================================================================= */
+
 .page-property-details {
-    --primary-color: #002366;
-    --secondary-color: #FFFFFF;
-    --accent-color: #FFD700;
-    --text-color: #333333;
-    --background-color: #F0F0F0;
-    --title-background-color: #E6F0F8;
-}
-.page-property-details .favorite-btn {
-    position: relative; /* To position the message */
-    display: inline-block;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+  background: var(--bg);
 }
 
-.page-property-details .favorite-btn:hover {
-    transform: scale(1.2); /* Make the button bigger on hover */
+.pd__shell {
+  padding-top: var(--sp-6);
+  padding-bottom: var(--section);
 }
 
-/* Star rating */
-.page-property-details .star {
-    font-size: 32px; /* Increased size for the star */
-    cursor: pointer;
-    color: #333;
-    transition: color 0.3s ease;
+.pd__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 40px;
+  margin-bottom: var(--gap);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--fg-muted);
+  text-decoration: none;
 }
 
-.page-property-details .star.filled {
-    color: gold;
+.pd__back:hover {
+  color: var(--brand-text);
 }
 
-
-/* Tooltip styling */
-.page-property-details .favorite-btn .favorite-message {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: #fff;
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 5px;
-    visibility: hidden; /* Hidden by default */
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
+/* Two columns above 980px; the aside drops below the gallery on narrower
+   screens, keeping the photo the first thing you see either way. */
+.pd__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr);
+  gap: clamp(var(--sp-5), 3vw, var(--sp-10));
+  align-items: start;
 }
 
-.page-property-details .favorite-btn:hover .favorite-message {
-    visibility: visible;
-    opacity: 1; /* Show message on hover */
+@media (max-width: 979px) {
+  .pd__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-
-.page-property-details .favorite-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+/* ================================ GALLERY =============================== */
+.gallery {
+  min-width: 0;
 }
 
-/* Body styles */
-.page-property-details {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+.gallery__viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  aspect-ratio: 4 / 3;
+  cursor: grab;
+  /* Horizontal movement belongs to the carousel, vertical still scrolls the
+     page — so the gallery never hijacks the page's primary gesture. */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-/* Property details container */
-.page-property-details .property-container {
-    display: flex;
-    flex-direction: row;
-    top: 5%;
-    gap: 2%; /* Slightly larger gap for better spacing */
-height: 100%;
-    margin:70px auto;
-    background-color: var(--secondary-color);
-    border-radius: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    padding-top:7%;
+.gallery__viewport[data-dragging] {
+  cursor: grabbing;
 }
 
-/* Property image (left side) */
-.page-property-details .property-image {
-    flex: 2;
-    max-width: 600px; /* Increase max-width for larger image */
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+.gallery__viewport:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
 }
 
-/* Carousel Container */
-.page-property-details .carousel {
-    position: relative;
-    width: 100%;
-    height: 350px; /* Increase height for a more prominent main image */
-    overflow: hidden;
-    border-radius: 10px;
+.gallery__track {
+  display: flex;
+  height: 100%;
+  /* No CSS transition here on purpose: a transition cannot be grabbed and
+     reversed mid-flight. The spring in lib/motion.js drives this transform. */
+  will-change: transform;
 }
 
-/* Carousel Images */
-.page-property-details .carousel-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    width: 100%;
-    height: 100%;
+.gallery__slide {
+  flex: 0 0 100%;
+  height: 100%;
 }
 
-.page-property-details .carousel-image {
-    flex: 0 0 100%;
-    display: none; /* Hide all images initially */
-    height: 100%;
+.gallery__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 }
 
-/* Image Styling */
-.page-property-details .carousel-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
+.gallery__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
 }
 
-/* Buttons for carousel navigation */
-.page-property-details .prev-btn, .page-property-details .next-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
-    font-size: 20px; /* Reduced font size for smaller arrows */
-    padding: 12px; /* Reduced padding for smaller buttons */
-    border: none;
-    cursor: pointer;
-    border-radius: 50%; /* Retain circular shape */
-    z-index: 10;
+.gallery__nav--prev {
+  left: var(--sp-3);
 }
 
-
-.page-property-details .prev-btn {
-    left: 1%;
+.gallery__nav--next {
+  right: var(--sp-3);
 }
 
-.page-property-details .next-btn {
-    right: 1%;
+.gallery__nav:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.92);
 }
 
-.page-property-details .prev-btn:hover, .page-property-details .next-btn:hover {
-    background-color: rgba(0, 0, 0, 0.6);
+.gallery__counter {
+  position: absolute;
+  bottom: var(--sp-3);
+  right: var(--sp-3);
+  z-index: 2;
+  padding: 0.3em 0.7em;
+  border-radius: var(--r-full);
+  background: var(--photo-plate);
+  border: 1px solid var(--photo-plate-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--photo-fg);
 }
 
-/* Property details text */
-.page-property-details .property-details {
-    width: 40%;
-    flex: 1;
-    background-color: var(--secondary-color);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    position: relative;
+.gallery--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-lg);
+  background: var(--surface-sunken);
+  color: var(--fg-faint);
+  text-align: center;
+  padding: var(--sp-6);
 }
 
-/* Title */
-.page-property-details .property-details h3 {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    font-weight: bold;
+/* Thumbnails scroll inside their own strip; the page never scrolls sideways. */
+.gallery__thumbs {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+  padding-bottom: var(--sp-1);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Description */
-.page-property-details .property-details p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    color: var(--text-color);
+.gallery__thumb {
+  flex: 0 0 auto;
+  width: 76px;
+  height: 58px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--r-xs);
+  overflow: hidden;
+  opacity: 0.62;
+  scroll-snap-align: start;
+  transition: opacity var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-instant) var(--ease-out);
 }
 
-/* Price styling */
-.page-property-details .property-details .price {
-    font-size: 1.5rem;
-    color: var(--accent-color);
-    font-weight: bold;
-    margin-bottom: 25px;
+.gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Report Button */
-.page-property-details .report-btn {
-    background-color: #e74c3c;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
+.gallery__thumb:hover {
+  opacity: 0.85;
 }
 
-.page-property-details .report-btn:hover {
-    background-color: #c0392b;
+.gallery__thumb:active {
+  transform: scale(0.95);
 }
 
-/* Action Buttons */
-.page-property-details .edit-btn, .page-property-details .delete-btn {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.3s ease-in-out;
+.gallery__thumb[aria-selected="true"] {
+  opacity: 1;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand) 34%, transparent);
 }
 
-.page-property-details .edit-btn {
-    background-color: var(--primary-color);
-    color: white;
+/* ================================ ASIDE ================================= */
+.pd__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  position: sticky;
+  top: calc(var(--appbar-h) + env(safe-area-inset-top, 0px) + var(--sp-5));
 }
 
-.page-property-details .edit-btn:hover {
-    background-color: var(--accent-color);
-    transform: scale(1.05);
+@media (max-width: 979px) {
+  .pd__aside {
+    position: static;
+  }
 }
 
-.page-property-details .edit-btn:active {
-    transform: scale(0.95);
+/* Price, status and the save action are one brand-tinted decision panel rather
+   than three loose elements on the page background. This is the surface a buyer
+   actually makes the call on, so it is the one place on the detail page that
+   carries a definite blue ground - and it stops the aside from reading as a
+   stack of unrelated floating cards. */
+.pd__headline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+  background: var(--surface-brand-subtle);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--r-md);
+  box-shadow: var(--edge-light);
 }
 
-.page-property-details .delete-btn {
-    background-color: #e74c3c;
-    color: white;
+.pd__price {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  font-weight: var(--weight-bold);
+  color: var(--fg-display);
 }
 
-.page-property-details .delete-btn:hover {
-    background-color: #c0392b;
-    transform: scale(1.05);
+.pd__per {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
+  color: var(--fg-muted);
 }
 
-.page-property-details .delete-btn:active {
-    transform: scale(0.95);
+.pd__title {
+  font-size: var(--text-title-3);
+  line-height: var(--text-title-3-lh);
+  letter-spacing: var(--text-title-3-ls);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-secondary);
 }
 
-/* User Details Button */
-.page-property-details .user-details-btn { 
-    position: absolute;
-    top: 2%;
-    right: 0;
-    padding: 12px 40px 12px 24px; /* Extra padding on the right */
-    background-color: #002366; /* Primary color */
-    color: #fff;
-    border: none;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0; /* Pin-like shape */
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.pd__location {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--text-body-sm);
+  color: var(--fg-muted);
 }
 
-.page-property-details .user-details-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -20px; /* Extends beyond the container */
-    width: 20px;
-    height: 100%;
-    background-color: #002366;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
+.pd__location svg {
+  flex: none;
+  margin-top: 0.15em;
 }
 
-.page-property-details .user-details-btn:hover {
-    background-color: var(--accent-color);
-    transform: scale(1.05);
+/* ------------------------------------------------------------- favourite */
+.pd__fav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 48px;
+  padding: 0 var(--sp-5);
+  border: 1px solid var(--brand-border-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--fg);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-instant) var(--ease-out);
 }
 
-.page-property-details .user-details-btn:active {
-    transform: scale(0.95);
-}
-.page-property-details .user-details-btn { 
-    position: absolute;
-    top: 2%;
-    right: 0;
-    padding: 12px 40px 12px 24px;
-    background: linear-gradient(135deg, #002366 60%, #001a4d); /* Gradient for depth */
-    color: #fff;
-    border: none;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    box-shadow: inset -5px 0 10px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.pd__fav:hover:not(:disabled) {
+  border-color: var(--danger);
+  background: var(--danger-tint);
 }
 
-.page-property-details .user-details-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -20px;
-    width: 20px;
-    height: 100%;
-    background: linear-gradient(135deg, #002366 60%, #001a4d);
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-    box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.3); /* Adds depth to the extension */
+.pd__fav:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
-.page-property-details .user-details-btn:hover {
-    background-color: var(--accent-color);
-    transform: scale(1.05);
+.pd__fav:disabled {
+  opacity: 0.6;
 }
 
-.page-property-details .user-details-btn:active {
-    transform: scale(0.95);
+.pd__fav[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--danger) 42%, transparent);
+  background: var(--danger-tint);
+  color: var(--danger-hover);
 }
 
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    .page-property-details .property-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .page-property-details .property-image {
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .page-property-details .property-details {
-        width: 90%;
-        padding: 20px;
-    }
+.pd__fav-icon {
+  transition: transform var(--dur) var(--ease-spring);
 }
 
-.page-property-details .buttons {
-    display: flex;
-    justify-content: space-between;
-}
-.page-property-details .report-message {
-    margin-top: 10px;
-    font-size: 14px;
-    padding: 10px;
-    border-radius: 5px;
-}
-.page-property-details .report-message.success {
-    color: green;
-    background-color: #e6ffe6;
-    border: 1px solid #00cc00;
-}
-.page-property-details .report-message.error {
-    color: red;
-    background-color: #ffe6e6;
-    border: 1px solid #ff0000;
-}
-.page-property-details .navbar {
-    background-color: var(--primary-color);
-    padding: 10px 20px;
-    position: fixed;
-    width: 100%;
-    height: 10%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Filling the heart is the confirmation. A single scale beat marks the moment
+   the state actually changed — cause and effect, on the same event. */
+.pd__fav-icon.is-on {
+  fill: currentColor;
+  animation: pd-beat var(--dur-slow) var(--ease-spring);
 }
 
-.page-property-details .navbar-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+@keyframes pd-beat {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.28);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-.page-property-details .nav-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 10px 15px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* ----------------------------------------------------------------- facts */
+.pd__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  background: var(--brand-border);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--r-md);
+  overflow: hidden;
 }
 
-.page-property-details .nav-button.active {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    font-weight: bold;
+.pd__fact {
+  padding: var(--sp-3);
+  background: var(--surface);
 }
 
-.page-property-details .nav-button.active a {
-    color: #002366 !important;
+.pd__fact dt {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-caption);
+  letter-spacing: var(--text-caption-ls);
+  color: var(--fg-muted);
 }
 
-.page-property-details .nav-button:hover {
-    background-color: var(--accent-color);
-    border-radius: 5px;
-}
-.page-property-details .logo {
-    height: 80px;
-    font-size: 25px;
-    display: flex;
-    align-items: center;
-    margin-right: 5%;
-    color: #ffffff;
-    font-family: 'Carattere', sans-serif;
+.pd__fact dt svg {
+  color: var(--fg-faint);
 }
 
-.page-property-details .yellow {
-    color: #ffd700;
+.pd__fact dd {
+  margin: var(--sp-1) 0 0;
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  color: var(--fg);
+  text-transform: capitalize;
+}
+
+/* ----------------------------------------------------------------- owner */
+.pd__owner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--edge-light);
+}
+
+.pd__owner-avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--r-full);
+  background: var(--brand-tint);
+  color: var(--brand-text);
+}
+
+.pd__owner-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+
+.pd__owner-link:hover {
+  text-decoration: underline;
+}
+
+.pd__verified {
+  display: inline-flex;
+  color: var(--success);
+}
+
+/* --------------------------------------------------------------- manage */
+.pd__manage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-sunken);
+}
+
+/* =============================== SECTIONS =============================== */
+.pd__section {
+  margin-top: var(--section);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.pd__section h2 {
+  font-size: var(--text-title-2);
+  letter-spacing: var(--text-title-2-ls);
+  color: var(--fg-display);
+}
+
+.pd__description {
+  color: var(--fg-secondary);
+  line-height: 1.65;
+}
+
+.pd__report {
+  align-items: flex-start;
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--border);
+}
+
+.pd__report-form {
+  width: 100%;
+  max-width: 34rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
 }

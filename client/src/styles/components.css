@@ -1,0 +1,1489 @@
+/* ============================================================================
+   Shared component layer. Every interactive primitive defines its rest, hover,
+   focus-visible, pressed and disabled states here so pages never re-invent
+   them. Depends on tokens.css + foundation.css.
+   ========================================================================= */
+
+/* ================================ BUTTON ================================
+   44px minimum touch target at the default size. Feedback lands on
+   pointer-down (:active), not on release, so the press feels immediate. */
+.pf-btn {
+  --btn-h: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: var(--btn-h);
+  padding: 0 var(--sp-5);
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--text-label-ls);
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform var(--dur-instant) var(--ease-out);
+}
+
+.pf-btn:active:not(:disabled) {
+  transform: scale(0.975);
+}
+
+.pf-btn:disabled,
+.pf-btn[aria-disabled="true"] {
+  opacity: 0.44;
+  transform: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Sizes */
+.pf-btn--sm {
+  --btn-h: 36px;
+  padding: 0 var(--sp-3);
+  font-size: var(--text-label);
+  border-radius: var(--r-xs);
+}
+
+.pf-btn--lg {
+  --btn-h: 52px;
+  padding: 0 var(--sp-6);
+  font-size: var(--text-body);
+}
+
+.pf-btn--block {
+  width: 100%;
+}
+
+/* Primary — one per screen. */
+.pf-btn--primary {
+  background: var(--brand);
+  color: var(--fg-on-brand);
+  box-shadow: var(--shadow-1);
+}
+
+.pf-btn--primary:hover:not(:disabled) {
+  background: var(--brand-hover);
+  box-shadow: var(--shadow-2);
+}
+
+.pf-btn--primary:active:not(:disabled) {
+  background: var(--brand-active);
+  box-shadow: var(--shadow-1);
+}
+
+/* Contrast — a solid light plate with brand ink, for the primary action when
+   it sits on a photograph. A blue fill on a dark image reads as a hole; a white
+   plate reads as a control. Not a second brand colour. */
+.pf-btn--contrast {
+  background: var(--neutral-0);
+  color: var(--blue-800);
+  box-shadow: var(--shadow-2);
+}
+
+.pf-btn--contrast:hover:not(:disabled) {
+  background: var(--blue-50);
+  box-shadow: var(--shadow-3);
+}
+
+.pf-btn--contrast:active:not(:disabled) {
+  background: var(--blue-100);
+}
+
+/* Secondary — tonal, for the subordinate action beside a primary. */
+.pf-btn--secondary {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--fg);
+}
+
+.pf-btn--secondary:hover:not(:disabled) {
+  background: var(--surface-sunken);
+  border-color: var(--fg-faint);
+}
+
+.pf-btn--secondary:active:not(:disabled) {
+  background: var(--border);
+}
+
+/* Ghost — lowest emphasis, for tertiary and in-toolbar actions. */
+.pf-btn--ghost {
+  background: transparent;
+  color: var(--fg-secondary);
+}
+
+.pf-btn--ghost:hover:not(:disabled) {
+  background: var(--surface-sunken);
+  color: var(--fg);
+}
+
+/* Danger — destructive, always visually separated from the primary path. */
+.pf-btn--danger {
+  background: var(--danger);
+  color: var(--danger-fg);
+  box-shadow: var(--shadow-1);
+}
+
+.pf-btn--danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.pf-btn--danger-quiet {
+  background: var(--danger-tint);
+  color: var(--danger-hover);
+  border-color: color-mix(in srgb, var(--danger) 28%, transparent);
+}
+
+.pf-btn--danger-quiet:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--danger) 18%, transparent);
+}
+
+/* Icon-only: square, and always carries an aria-label. */
+.pf-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid transparent;
+  border-radius: var(--r-full);
+  color: var(--fg-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-instant) var(--ease-out);
+}
+
+.pf-icon-btn:hover:not(:disabled) {
+  background: var(--surface-sunken);
+  color: var(--fg);
+}
+
+.pf-icon-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.pf-icon-btn:disabled {
+  opacity: 0.44;
+  pointer-events: none;
+}
+
+.pf-icon-btn--solid {
+  background: var(--glass);
+  border-color: var(--glass-border);
+  color: var(--fg);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  box-shadow: var(--shadow-2);
+}
+
+.pf-icon-btn--solid:hover:not(:disabled) {
+  background: var(--surface);
+}
+
+/* ================================ SPINNER ===============================
+   A steady rotation, never a decorative pulse. Reduced motion collapses the
+   animation duration globally, so the glyph simply sits still and legible. */
+.pf-spinner {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: pf-spin 700ms linear infinite;
+}
+
+@keyframes pf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================= FIELD ================================ */
+.pf-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+
+.pf-label {
+  font-size: var(--text-label);
+  line-height: var(--text-label-lh);
+  letter-spacing: var(--text-label-ls);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-secondary);
+}
+
+.pf-label__req {
+  color: var(--danger);
+  margin-left: 0.15em;
+}
+
+.pf-hint {
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-lh);
+  letter-spacing: var(--text-caption-ls);
+  color: var(--fg-muted);
+}
+
+/* Errors sit directly below the field they belong to, carry an icon as well as
+   colour, and are announced to screen readers by the component. */
+.pf-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-lh);
+  color: var(--danger-hover);
+  font-weight: var(--weight-medium);
+}
+
+.pf-error svg {
+  flex: none;
+  margin-top: 0.1em;
+}
+
+.pf-input,
+.pf-select,
+.pf-textarea {
+  width: 100%;
+  min-height: 44px; /* touch-friendly and avoids iOS focus zoom with 16px text */
+  padding: var(--sp-3);
+  font-size: var(--text-body);
+  /* Explicit control tokens, not --fg/--surface. A field dropped inside a
+     brand-tinted region must keep its own readable pairing rather than
+     inheriting the region's. */
+  color: var(--control-fg);
+  background-color: var(--control-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-1) inset;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.pf-textarea {
+  min-height: 96px;
+  line-height: var(--text-body-lh);
+}
+
+.pf-input::placeholder,
+.pf-textarea::placeholder {
+  color: var(--control-placeholder);
+  /* Firefox dims placeholders to 54% by default, which would drop the computed
+     colour below AA on top of the value the token already sets. */
+  opacity: 1;
+}
+
+.pf-input:hover:not(:disabled),
+.pf-select:hover:not(:disabled),
+.pf-textarea:hover:not(:disabled) {
+  border-color: var(--fg-faint);
+}
+
+.pf-input:focus-visible,
+.pf-select:focus-visible,
+.pf-textarea:focus-visible {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: var(--shadow-focus);
+}
+
+/* The error state changes the field's ground, never its ink: --control-fg is
+   restated so the text stays at full contrast on the tint. */
+.pf-input[aria-invalid="true"],
+.pf-textarea[aria-invalid="true"],
+.pf-select[aria-invalid="true"] {
+  border-color: var(--danger);
+  background-color: var(--danger-tint);
+  color: var(--control-fg);
+}
+
+.pf-input[aria-invalid="true"]:focus-visible,
+.pf-textarea[aria-invalid="true"]:focus-visible,
+.pf-select[aria-invalid="true"]:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 28%, transparent);
+}
+
+/* Disabled is expressed by ground + border + cursor, never by opacity on the
+   control. Fading the whole element would take the text below AA and, on a
+   select, would drag the native option popup down with it. --control-disabled-fg
+   still clears 4.6:1 on --control-disabled-bg in both themes. */
+.pf-input:disabled,
+.pf-select:disabled,
+.pf-textarea:disabled {
+  background-color: var(--control-disabled-bg);
+  color: var(--control-disabled-fg);
+  border-color: var(--border);
+  box-shadow: none;
+  opacity: 1;
+  -webkit-text-fill-color: var(--control-disabled-fg); /* iOS Safari dims otherwise */
+}
+
+/* Read-only reads as real content, not as a dead control. */
+.pf-input[readonly] {
+  background-color: var(--control-disabled-bg);
+  border-color: var(--border);
+  color: var(--control-fg);
+  box-shadow: none;
+}
+
+/* Chrome paints autofilled fields yellow via an internal shadow that ordinary
+   background-color cannot override. An inset shadow the size of the box wins,
+   and text-fill-color restores the ink. */
+.pf-input:-webkit-autofill,
+.pf-input:-webkit-autofill:hover,
+.pf-input:-webkit-autofill:focus,
+.pf-select:-webkit-autofill {
+  -webkit-text-fill-color: var(--control-fg);
+  -webkit-box-shadow: 0 0 0 100px var(--control-bg) inset;
+  caret-color: var(--control-fg);
+}
+
+/* =============================== SELECT =================================
+   A native <select> is the only control in the product whose dropdown is drawn
+   by the operating system rather than by the page, and the rules for colouring
+   that popup are not consistent across engines:
+
+     - Chrome/Edge propagate the SELECT's own background-color and color to the
+       options. A transparent select therefore gives the popup no background,
+       and it falls back to the UA default — which on a dark page means the
+       page's near-white text lands on a white popup.
+     - Firefox styles options from the OPTION's own colours and otherwise uses
+       the system menu colours, ignoring the select entirely.
+     - Safari largely ignores both and follows the computed color-scheme.
+
+   So all four values are stated explicitly — control fg/bg and option fg/bg —
+   and the select is never transparent. color-scheme is pinned on :root in
+   tokens.css, which is what makes Safari agree with the other two.
+   ---------------------------------------------------------------------- */
+.pf-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: var(--sp-8);
+  color: var(--control-fg);
+  /* background-color, not the `background` shorthand: the chevron below is a
+     background-image, and the shorthand would wipe it out. */
+  background-color: var(--control-bg);
+  background-repeat: no-repeat;
+  background-position: right var(--sp-3) center;
+  cursor: pointer;
+  /* A data-URI cannot read a custom property, so the glyph colour is written
+     once per theme rather than once per page. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234c5f7d' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/* Every option, in every select in the product. Without this the popup is at
+   the mercy of whichever engine is rendering it. */
+.pf-select option,
+.pf-select optgroup {
+  color: var(--option-fg);
+  background-color: var(--option-bg);
+}
+
+/* The empty "Any type" / "All cities" choice is a real option, not a
+   placeholder — it must stay visible, just quieter than a real value. */
+.pf-select option[value=""] {
+  color: var(--control-placeholder);
+}
+
+.pf-select option:disabled {
+  color: var(--control-disabled-fg);
+}
+
+/* Disabled: the chevron greys with the control instead of staying full
+   strength over a dimmed ground. */
+.pf-select:disabled {
+  cursor: not-allowed;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235b6e88' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="dark"] .pf-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238ba0bd' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .pf-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238ba0bd' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  }
+}
+
+/* Windows High Contrast / forced-colors: the OS owns every colour here, and a
+   custom chevron drawn in a now-ignored colour would simply vanish, leaving a
+   select with no dropdown affordance at all. Hand the whole control back to
+   the platform. */
+@media (forced-colors: active) {
+  .pf-select {
+    appearance: auto;
+    -webkit-appearance: auto;
+    background-image: none;
+    padding-right: var(--sp-3);
+  }
+
+  .pf-select option,
+  .pf-select optgroup,
+  .pf-select option[value=""] {
+    color: CanvasText;
+    background-color: Canvas;
+  }
+}
+
+/* Input with a trailing control (password reveal, unit suffix). */
+.pf-input-affix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pf-input-affix .pf-input {
+  padding-right: 48px;
+}
+
+.pf-input-affix__end {
+  position: absolute;
+  right: 2px;
+  width: 40px;
+  height: 40px;
+}
+
+/* Leading static prefix, e.g. the +961 dial code. */
+.pf-input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+.pf-input-group__prefix {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--sp-3);
+  font-size: var(--text-body);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-strong);
+  border-right: none;
+  border-radius: var(--r-sm) 0 0 var(--r-sm);
+}
+
+.pf-input-group .pf-input {
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+
+/* ========================= SEGMENTED RADIO GROUP =======================
+   Replaces bare radio pairs (Sell/Rent, Furnished yes/no). Real <input
+   type=radio> underneath, so keyboard and screen-reader behaviour is native. */
+.pf-segmented {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: var(--surface-brand-subtle);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--r-sm);
+}
+
+.pf-segmented__option {
+  position: relative;
+  display: inline-flex;
+}
+
+.pf-segmented input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Full-width variant, for a sheet or a settings row where the group should
+   claim the whole line rather than sit as a chip. */
+.pf-segmented--block {
+  display: flex;
+  width: 100%;
+}
+
+.pf-segmented--block .pf-segmented__option {
+  flex: 1;
+}
+
+.pf-segmented--block span {
+  width: 100%;
+  min-height: 44px;
+}
+
+.pf-segmented span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 38px;
+  padding: 0 var(--sp-4);
+  border-radius: calc(var(--r-sm) - 3px);
+  font-size: var(--text-label);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-muted);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.pf-segmented input:hover + span {
+  color: var(--fg);
+}
+
+/* The selected option is a raised plate, not just a colour change: on true
+   black a background swap alone is close to invisible, so the hairline does
+   the separating and the colour confirms it. */
+.pf-segmented input:checked + span {
+  background: var(--surface-brand);
+  color: var(--brand-text);
+  box-shadow: var(--shadow-1), inset 0 0 0 1px var(--brand-border-strong);
+}
+
+.pf-segmented input:focus-visible + span {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ================================= CARD ================================= */
+.pf-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  /* --edge-light is a white hairline in light mode and a blue one in dark. On a
+     navy-black canvas it is what actually communicates "raised" - a drop shadow
+     against near-black is invisible. */
+  box-shadow: var(--shadow-1), var(--edge-light);
+}
+
+.pf-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2), var(--edge-light);
+  padding: clamp(var(--sp-4), 3vw, var(--sp-8));
+}
+
+/* =============================== BADGE ================================== */
+.pf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 0.22em 0.6em;
+  border-radius: var(--r-full);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.pf-badge--neutral {
+  background: var(--surface-sunken);
+  color: var(--fg-secondary);
+  border: 1px solid var(--border);
+}
+
+.pf-badge--brand {
+  background: var(--brand-tint);
+  color: var(--brand-text);
+}
+
+/* Ink — the counterpart to --brand for a two-way distinction (for sale vs. to
+   rent). Both badges always carry their word, so the difference is never
+   carried by colour alone. */
+.pf-badge--ink {
+  background: var(--surface-inverse);
+  color: var(--surface);
+}
+
+.pf-badge--success {
+  background: var(--success-tint);
+  color: var(--success-ink);
+}
+
+.pf-badge--danger {
+  background: var(--danger-tint);
+  color: var(--danger-hover);
+}
+
+/* ================================ ALERT =================================
+   Status, completion, warning and error all share one shape. Colour is never
+   the only signal: each carries an icon and its own wording. */
+.pf-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm-lh);
+  text-align: left;
+}
+
+.pf-alert svg {
+  flex: none;
+  margin-top: 0.12em;
+}
+
+.pf-alert--success {
+  background: var(--success-tint);
+  border-color: color-mix(in srgb, var(--success) 30%, transparent);
+  color: var(--success-ink);
+}
+
+.pf-alert--error {
+  background: var(--danger-tint);
+  border-color: color-mix(in srgb, var(--danger) 30%, transparent);
+  color: var(--danger-hover);
+}
+
+.pf-alert--warning {
+  background: var(--warning-tint);
+  border-color: color-mix(in srgb, var(--warning) 30%, transparent);
+  color: var(--warning);
+}
+
+.pf-alert--info {
+  background: var(--surface-brand);
+  border-color: var(--brand-border-strong);
+  color: var(--brand-text);
+}
+
+/* ================================ TOAST =================================
+   Anchored bottom-centre, above the safe area. Never steals focus; the live
+   region announces it instead. */
+.pf-toast-region {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--sp-6) + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  width: min(440px, calc(100vw - 2 * var(--sp-4)));
+  pointer-events: none;
+}
+
+.pf-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--chrome-blur)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--chrome-blur)) saturate(170%);
+  box-shadow: var(--shadow-4);
+  color: var(--fg);
+  /* Vibrancy over a translucent surface: a touch heavier than body weight so
+     it stays legible against whatever scrolls underneath. */
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.004em;
+  pointer-events: auto;
+  animation: pf-toast-in var(--dur) var(--ease-spring) both;
+}
+
+.pf-toast__icon {
+  flex: none;
+  margin-top: 0.1em;
+}
+
+.pf-toast--success .pf-toast__icon {
+  color: var(--success);
+}
+
+.pf-toast--error .pf-toast__icon {
+  color: var(--danger);
+}
+
+.pf-toast__body {
+  flex: 1;
+  min-width: 0;
+}
+
+@keyframes pf-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================ SCRIM + MODAL =============================
+   A modal task dims its background and pushes it back. The surface
+   materialises — blur and scale animate together — rather than plain-fading,
+   so it reads as a real sheet arriving. Enter and exit share the same path. */
+.pf-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  place-items: center;
+  padding: var(--sp-4);
+  background: var(--scrim);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: pf-fade-in var(--dur-fast) var(--ease-out) both;
+}
+
+.pf-scrim[data-closing="true"] {
+  animation: pf-fade-in var(--dur-instant) var(--ease-in) reverse both;
+}
+
+.pf-modal {
+  position: relative;
+  z-index: var(--z-modal);
+  width: min(440px, 100%);
+  max-height: calc(100dvh - 2 * var(--sp-6));
+  overflow-y: auto;
+  padding: var(--sp-6);
+  /* The floating step, not the base one. On black a modal painted the same
+     colour as the cards behind it has no depth at all — the scrim dims them but
+     the sheet itself still needs to be lighter than what it covers. */
+  background: var(--surface-floating);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-4);
+  animation: pf-modal-in var(--dur) var(--ease-out) both;
+  /* Anchored to whatever opened it, so the spatial relationship is obvious. */
+  transform-origin: var(--modal-origin, 50% 50%);
+}
+
+.pf-scrim[data-closing="true"] .pf-modal {
+  animation: pf-modal-in var(--dur-fast) var(--ease-in) reverse both;
+}
+
+.pf-modal__title {
+  font-size: var(--text-title-3);
+  line-height: var(--text-title-3-lh);
+  letter-spacing: var(--text-title-3-ls);
+  margin-bottom: var(--sp-2);
+}
+
+.pf-modal__body {
+  color: var(--fg-secondary);
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm-lh);
+}
+
+.pf-modal__actions {
+  display: flex;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+
+.pf-modal__actions .pf-btn {
+  flex: 1;
+}
+
+@keyframes pf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pf-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(10px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-modal,
+  .pf-scrim[data-closing="true"] .pf-modal {
+    animation: pf-fade-in var(--dur-fast) var(--ease-out) both;
+  }
+}
+
+/* ================================ SHEET =================================
+   Bottom sheet for the mobile navigation. Drag position is written to
+   --sheet-y by the gesture handler, so tracking is 1:1 with the finger and can
+   be grabbed and reversed at any moment. */
+.pf-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-modal);
+  padding: var(--sp-3) var(--gutter)
+    calc(var(--sp-6) + env(safe-area-inset-bottom, 0px));
+  background: var(--glass);
+  border-top: 1px solid var(--glass-border);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  backdrop-filter: blur(var(--chrome-blur)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--chrome-blur)) saturate(170%);
+  box-shadow: var(--shadow-4);
+  transform: translate3d(0, var(--sheet-y, 0px), 0);
+  touch-action: none;
+}
+
+.pf-sheet__grabber {
+  width: 40px;
+  height: 4px;
+  margin: 0 auto var(--sp-4);
+  border-radius: var(--r-full);
+  background: var(--border-strong);
+}
+
+/* =============================== SKELETON ==============================
+   Reserves the exact final box so nothing shifts when data lands. */
+.pf-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton) 0%,
+    var(--skeleton-sheen) 50%,
+    var(--skeleton) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--r-xs);
+  animation: pf-shimmer 1.4s ease-in-out infinite;
+}
+
+.pf-skeleton--text {
+  height: 0.8em;
+  margin-block: 0.25em;
+}
+
+@keyframes pf-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-skeleton {
+    animation: none;
+    background: var(--skeleton);
+  }
+}
+
+/* ============================== EMPTY STATE ============================= */
+.pf-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-12) var(--sp-6);
+  text-align: center;
+  color: var(--fg-muted);
+}
+
+/* Even "nothing here" is on-brand: a blue disc rather than a grey one. An
+   empty state is often the first surface a new account ever sees. */
+.pf-empty__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--sp-1);
+  border-radius: var(--r-full);
+  background: var(--surface-brand);
+  color: var(--brand-text);
+}
+
+.pf-empty__title {
+  font-size: var(--text-title-3);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-display);
+}
+
+.pf-empty__body {
+  max-width: 42ch;
+  font-size: var(--text-body-sm);
+}
+
+.pf-empty__action {
+  margin-top: var(--sp-3);
+}
+
+/* =============================== APP BAR ================================
+   A floating translucent layer with content scrolling underneath, not an opaque
+   strip that consumes a fixed slice of the viewport. */
+.pf-appbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-chrome);
+  height: calc(var(--appbar-h) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--gutter) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  background: var(--chrome);
+  backdrop-filter: blur(var(--chrome-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--chrome-blur)) saturate(180%);
+  /* A bright top edge reads as light catching the material. */
+  box-shadow: inset 0 1px 0 var(--chrome-border);
+  transition: background-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+/* Once content is beneath the bar, thicken the material and draw the bottom
+   edge, so the boundary is felt without a hard 1px rule across the page at
+   rest. The change is deliberately small — the bar should read as the same
+   object, slightly denser, not as a different component. */
+.pf-appbar[data-scrolled="true"] {
+  background: var(--chrome-scrolled);
+  box-shadow: inset 0 1px 0 var(--chrome-border),
+    inset 0 -1px 0 var(--chrome-border), var(--shadow-2);
+}
+
+.pf-appbar__brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  color: var(--chrome-fg);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+/* The wordmark is the only place blue is used purely as identity. Everywhere
+   else blue means "you can act on this". --chrome-accent, not --brand-text:
+   the bar is a deep navy material in BOTH themes, so the second half of the
+   wordmark needs the light end of the ramp, not the page's link ink. */
+.pf-appbar__brand em {
+  font-style: normal;
+  color: var(--chrome-accent);
+}
+
+.pf-appbar__brand:hover em {
+  color: var(--chrome-fg);
+}
+
+.pf-appbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  min-width: 0;
+  margin-left: auto;
+}
+
+/* Nav item: label + icon, current location marked by fill and weight, not
+   colour alone. */
+.pf-navlink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 36px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-xs);
+  font-size: var(--text-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.004em;
+  color: var(--chrome-fg-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-instant) var(--ease-out);
+}
+
+.pf-navlink:hover {
+  background: var(--chrome-hover);
+  color: var(--chrome-fg);
+}
+
+.pf-navlink:active {
+  transform: scale(0.96);
+}
+
+/* Current location is marked three ways — a blue fill, heavier weight and an
+   underline rule — so it survives colour-blindness, high contrast and a
+   greyscale screenshot. The fill is a real blue, not a white wash: on a navy
+   bar a translucent-white pill reads as "slightly lighter navy", which is not
+   a state anyone notices. */
+.pf-navlink[aria-current="page"] {
+  background: var(--chrome-selected);
+  color: var(--chrome-fg);
+  font-weight: var(--weight-semibold);
+  box-shadow: inset 0 0 0 1px var(--chrome-border);
+}
+
+.pf-navlink[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: var(--sp-3);
+  right: var(--sp-3);
+  bottom: -7px;
+  height: 2px;
+  border-radius: var(--r-full);
+  background: var(--chrome-accent);
+}
+
+/* Dangerous or session-ending actions are spatially separated from navigation. */
+.pf-appbar__end {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding-left: var(--sp-3);
+  margin-left: var(--sp-1);
+  border-left: 1px solid var(--chrome-border);
+}
+
+.pf-appbar .pf-icon-btn {
+  color: var(--chrome-fg-muted);
+  width: 40px;
+  height: 40px;
+}
+
+.pf-appbar .pf-icon-btn:hover {
+  background: var(--chrome-hover);
+  color: var(--chrome-fg);
+}
+
+/* The page's focus ring is a mid blue chosen against a white page. On the navy
+   bar that is two dark blues on top of each other and effectively invisible, so
+   chrome uses the light end of the ramp instead. */
+.pf-appbar :focus-visible {
+  outline-color: var(--chrome-accent);
+}
+
+/* The inline nav collapses into a sheet rather than cramming targets or
+   wrapping. Bars with more destinations collapse earlier — cramming eight 36px
+   pills into a 56px bar would fail both the touch-target and the legibility
+   test long before the layout actually broke. */
+.pf-appbar__menu-btn {
+  display: none;
+  margin-left: auto;
+}
+
+@media (max-width: 719px) {
+  .pf-appbar[data-collapse="narrow"] .pf-appbar__nav--inline,
+  .pf-appbar[data-collapse="narrow"] .pf-appbar__end {
+    display: none;
+  }
+
+  .pf-appbar[data-collapse="narrow"] .pf-appbar__menu-btn {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 1079px) {
+  .pf-appbar[data-collapse="wide"] .pf-appbar__nav--inline,
+  .pf-appbar[data-collapse="wide"] .pf-appbar__end {
+    display: none;
+  }
+
+  .pf-appbar[data-collapse="wide"] .pf-appbar__menu-btn {
+    display: inline-flex;
+  }
+}
+
+/* Sheet nav items get full-width rows and a comfortable touch height. */
+.pf-sheet .pf-navlink {
+  min-height: 48px;
+  width: 100%;
+  justify-content: flex-start;
+  color: var(--fg-secondary);
+  border-radius: var(--r-sm);
+  font-size: var(--text-body);
+}
+
+.pf-sheet .pf-navlink:hover {
+  background: var(--surface-sunken);
+  color: var(--fg);
+}
+
+.pf-sheet .pf-navlink[aria-current="page"] {
+  background: var(--brand-tint);
+  color: var(--brand-text);
+}
+
+.pf-sheet .pf-navlink[aria-current="page"]::after {
+  display: none;
+}
+
+.pf-sheet__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.pf-sheet__sep {
+  height: 1px;
+  margin: var(--sp-3) 0;
+  background: var(--divider);
+}
+
+/* ========================= SCROLL EDGE EFFECT ==========================
+   Applied only where floating chrome actually overlaps content: a short mask
+   that fades content into the bar instead of a hard divider. */
+.pf-scroll-edge {
+  position: fixed;
+  top: calc(var(--appbar-h) + env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  height: 24px;
+  z-index: calc(var(--z-chrome) - 1);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg) 92%, transparent),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.pf-scroll-edge[data-visible="true"] {
+  opacity: 1;
+}
+
+/* ================================ TABLE =================================
+   Wrapped in .pf-table-wrap so wide tables scroll inside their own box and the
+   page body never scrolls sideways. */
+.pf-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
+  -webkit-overflow-scrolling: touch;
+}
+
+.pf-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--text-body-sm);
+}
+
+.pf-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--sp-3) var(--sp-4);
+  text-align: left;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--brand-text);
+  /* A sticky header sits ABOVE the rows it labels, and it is tinted: it is the
+     one part of a dense table that can carry the brand without costing
+     legibility in the data itself. */
+  background: var(--surface-brand-subtle);
+  border-bottom: 1px solid var(--brand-border);
+  white-space: nowrap;
+}
+
+.pf-table tbody td {
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--divider);
+  color: var(--fg-secondary);
+  vertical-align: middle;
+}
+
+.pf-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.pf-table tbody tr {
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pf-table tbody tr:hover {
+  background: var(--surface-sunken);
+}
+
+.pf-table__id {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--fg-faint);
+}
+
+.pf-table__primary {
+  font-weight: var(--weight-semibold);
+  color: var(--fg);
+}
+
+.pf-table__actions {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.pf-table__empty td {
+  padding: var(--sp-12) var(--sp-4);
+  text-align: center;
+  color: var(--fg-muted);
+}
+
+/* ============================== PAGE HEADER =============================
+   A short blue rule above the title. It is the cheapest possible brand mark —
+   two pixels of colour that make every page in the product recognisably part
+   of the same system — and unlike a tinted header band it costs no vertical
+   space and never competes with the photography below it. */
+.pf-page-head {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-top: var(--sp-4);
+  margin-bottom: var(--gap-loose);
+}
+
+.pf-page-head::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 3px;
+  border-radius: var(--r-full);
+  background: var(--brand);
+}
+
+/* Titles wear --fg-display (deep navy in light, cool white in dark) rather than
+   the interaction blue: an unclickable heading must not look like a link. */
+.pf-page-head__title {
+  font-size: var(--text-title-1);
+  line-height: var(--text-title-1-lh);
+  letter-spacing: var(--text-title-1-ls);
+  font-weight: var(--weight-bold);
+  color: var(--fg-display);
+}
+
+.pf-page-head__sub {
+  margin-top: var(--sp-1);
+  color: var(--fg-muted);
+  font-size: var(--text-body-sm);
+}
+
+/* ============================ AUTH LAYOUT ==============================
+   Shared by login, signup, reset, change-password and verification: one
+   photographic backdrop, one solid card. */
+.pf-auth {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-6) var(--gutter)
+    calc(var(--sp-6) + env(safe-area-inset-bottom, 0px));
+  isolation: isolate;
+}
+
+.pf-auth::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: url("/pictures/apartment.jpeg");
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+/* A graded scrim rather than a uniform blur: the photograph stays readable as
+   an image while the card sits on genuinely dark ground. */
+.pf-auth::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+      to bottom,
+      var(--photo-scrim-top),
+      var(--photo-scrim-bottom)
+    ),
+    radial-gradient(
+      120% 90% at 50% 40%,
+      transparent,
+      var(--photo-scrim-top)
+    );
+  pointer-events: none;
+}
+
+.pf-auth__card {
+  width: 100%;
+  max-width: var(--container-narrow);
+  padding: clamp(var(--sp-6), 5vw, var(--sp-10));
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-4);
+}
+
+.pf-auth__card--wide {
+  max-width: 620px;
+}
+
+.pf-auth__brand {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.022em;
+  color: var(--brand-text);
+  text-decoration: none;
+}
+
+.pf-auth__brand em {
+  font-style: normal;
+  color: var(--brand-text);
+}
+
+.pf-auth__title {
+  margin-top: var(--sp-5);
+  font-size: var(--text-title-1);
+  line-height: var(--text-title-1-lh);
+  letter-spacing: var(--text-title-1-ls);
+  font-weight: var(--weight-bold);
+  color: var(--fg-display);
+}
+
+/* A blue rule across the top of the auth card. Signing in is where trust is
+   established, so the brand should be present at that moment - without the card
+   becoming a solid blue block behind the fields. */
+.pf-auth__card {
+  position: relative;
+  overflow: hidden;
+}
+
+.pf-auth__card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brand-deep), var(--brand));
+}
+
+.pf-auth__sub {
+  margin-top: var(--sp-2);
+  color: var(--fg-muted);
+  font-size: var(--text-body-sm);
+  line-height: var(--text-body-sm-lh);
+}
+
+.pf-auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.pf-auth__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--sp-4);
+}
+
+.pf-auth__foot {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--divider);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  font-size: var(--text-body-sm);
+  color: var(--fg-muted);
+}
+
+.pf-auth__foot a {
+  font-weight: var(--weight-semibold);
+}
+
+/* ============================ THEME PICKER ============================== */
+.pf-theme-picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pf-theme-picker__legend {
+  padding: 0 0 var(--sp-2);
+  font-size: var(--text-overline);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--text-overline-ls);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+/* ============================== UTILITIES =============================== */
+.pf-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.pf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.pf-muted {
+  color: var(--fg-muted);
+}
+
+.pf-caption {
+  font-size: var(--text-caption);
+  line-height: var(--text-caption-lh);
+  letter-spacing: var(--text-caption-ls);
+  color: var(--fg-muted);
+}
+
+/* ================================ FOOTER ================================ */
+.pf-footer {
+  margin-top: var(--section);
+  padding: var(--sp-8) 0 calc(var(--sp-8) + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-size: var(--text-body-sm);
+}
+
+.pf-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}

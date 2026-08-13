@@ -1,48 +1,50 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/client';
-import AdminNavbar from './AdminNavbar.jsx';
+import AdminPage from './AdminPage.jsx';
 import '../../styles/property_management.css';
 
-// property_management.php — all properties with submitter links
+const COLUMNS = ['ID', 'Title', 'Submitted by', 'Owner ID', 'Action'];
+
 export default function PropertyManagement() {
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/admin/properties').then(({ data }) => setProperties(data.properties)).catch(() => {});
+    api
+      .get('/admin/properties')
+      .then(({ data }) => setProperties(data.properties))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="page-prop-mgmt">
-      <AdminNavbar />
-      <div className="content">
-        <table className="property-table">
-          <thead>
-            <tr>
-              <th>Property ID</th><th>Title</th><th>Submitted By</th><th>Submitter ID</th><th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {properties.length ? properties.map((p) => (
-              <tr key={p.id}>
-                <td>{p.id.slice(-6)}</td>
-                <td><div className="title">{p.title}</div></td>
-                <td>
-                  {p.owner ? (
-                    <Link to={`/users/${p.owner.id}`} className="view-details-link">
-                      {p.owner.firstname} {p.owner.lastname}
-                    </Link>
-                  ) : '—'}
-                </td>
-                <td>{p.owner ? p.owner.id.slice(-6) : '—'}</td>
-                <td><Link to={`/property/${p.id}`} className="view-details-link">View Details</Link></td>
-              </tr>
-            )) : (
-              <tr><td colSpan="5" style={{ textAlign: 'center', padding: '40px 0', color: '#666' }}>No properties found</td></tr>
+    <AdminPage
+      title="Listings"
+      description="Every property published on PropertyFinder."
+      columns={COLUMNS}
+      rows={properties}
+      loading={loading}
+      emptyText="No listings have been published yet."
+      renderRow={(p) => (
+        <tr key={p.id}>
+          <td className="pf-table__id">{p.id.slice(-6)}</td>
+          <td className="pf-table__primary">{p.title}</td>
+          <td>
+            {p.owner ? (
+              <Link to={`/users/${p.owner.id}`}>
+                {p.owner.firstname} {p.owner.lastname}
+              </Link>
+            ) : (
+              <span className="pf-muted">Deleted account</span>
             )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </td>
+          <td className="pf-table__id">{p.owner ? p.owner.id.slice(-6) : '—'}</td>
+          <td>
+            <Link to={`/property/${p.id}`}>Open listing</Link>
+          </td>
+        </tr>
+      )}
+    />
   );
 }

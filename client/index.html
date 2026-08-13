@@ -2,8 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Zoom is never disabled: maximum-scale / user-scalable=no would lock out
+         anyone who needs to magnify the page. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Find houses, apartments, villas and cabins across Lebanon. Browse verified listings, save your favourites, and list your own property." />
+    <!-- Tells the browser both palettes exist, so form controls, scrollbars and
+         the address bar match the theme instead of staying stuck in light. -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#001a4a" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#020713" media="(prefers-color-scheme: dark)" />
     <title>PropertyFinder</title>
+    <!-- Runs before the first paint, so a user who chose dark never sees a
+         white flash while the bundle loads. Deliberately blocking and
+         dependency-free: the app's own theme module runs far too late to
+         prevent this, and reading one localStorage key costs well under a
+         millisecond. Kept in sync with src/lib/theme.js — same key, same
+         attribute values. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('pf-theme');
+          if (t === 'light' || t === 'dark') {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

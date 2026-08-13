@@ -1,0 +1,564 @@
+/* ============================================================================
+   PropertyFinder design tokens
+   ----------------------------------------------------------------------------
+   Direction: "blueprint". Blue is the product's architecture, not its trim.
+
+   The colour does four distinct jobs, and the token names say which is which:
+
+     brand-deep    #002366  authority — chrome, wordmark, major titles, prices
+     brand         #075FD8  interaction — fills, indicators, focus
+     brand-bright  #0A6DE5  the emphatic step of interaction (hover on a fill)
+     surface-brand*         structure — the tinted regions a page is built from
+
+   Light mode is blue and white: white stays the reading surface, pale blue
+   builds the page, navy carries the chrome. Dark mode is navy-black and blue:
+   pure black remains only as the deepest foundation, and content sits on
+   blue-tinted near-black layers so the theme reads as the same product rather
+   than as a greyscale inversion.
+
+   Red, green and amber exist only as danger / success / warning. There is no
+   second brand accent, by design.
+
+   Every value below is deliberate and referenced by name. Components must not
+   hardcode colour, spacing, radius, shadow or timing.
+   ========================================================================= */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---- Brand ramp -------------------------------------------------------
+     --blue-800 is the original brand colour (#002366) and stays the anchor.
+     The ramp exists because one blue cannot do every job: #002366 is a superb
+     ink at 14.7:1 on white but disappears on black, and #2997FF is perfect on
+     black but cannot carry white text.
+
+     Verified contrast (AA: 4.5:1 text, 3:1 UI):
+       #FFFFFF on --blue-600 #075FD8 ............ 5.8:1
+       #FFFFFF on --blue-550 #0A6DE5 ............ 4.9:1
+       --blue-700 #063E9E on #FFFFFF ............ 9.6:1
+       --blue-800 #002366 on --blue-75 .......... 13.0:1
+       #FFFFFF on --blue-900 #001A4A ............ 16.9:1  (light app bar)
+       --blue-400 #2997FF on --ink-975 .......... 6.7:1
+       --blue-950 #00142E on --blue-400 ......... 6.1:1   (dark primary button) */
+  --blue-950: #00142e;
+  --blue-900: #001a4a;
+  --blue-800: #002366;
+  --blue-700: #063e9e;
+  --blue-600: #075fd8;
+  --blue-550: #0a6de5;
+  --blue-500: #2c7be8;
+  --blue-400: #2997ff;
+  --blue-300: #7ab8ff;
+  --blue-200: #a9cbff;
+  --blue-150: #b9d3f7;
+  --blue-100: #dbe8ff;
+  --blue-75: #eaf2ff;
+  --blue-50: #f2f7ff;
+
+  /* ---- Navy-black ramp (dark mode surfaces) -----------------------------
+     Every step carries the brand hue. --ink-1000 is kept as the deepest
+     foundation but is deliberately NOT the page background: a full-viewport
+     pure black with white text on it is the "generic dark mode" this palette
+     exists to avoid. */
+  --ink-1000: #000000;
+  --ink-975: #020713;
+  --ink-950: #040b17;
+  --ink-900: #07101f;
+  --ink-800: #0c192b;
+  --ink-700: #11243c;
+  --ink-600: #17304f;
+
+  /* Navy panels: solid blue surfaces for selection, filters and summary
+     regions in dark mode. These are real colours, not low-alpha overlays — an
+     8%-white wash on near-black is invisible on most screens. */
+  --navy-subtle: #0c1e38;
+  --navy: #123255;
+  --navy-strong: #17416e;
+
+  /* ---- Neutrals (cool, blue-leaning — never grey-beige) ------------------ */
+  --neutral-0: #ffffff;
+  --neutral-50: #f4f7fc;
+  --neutral-100: #e8eff8;
+  --neutral-200: #d7e3f2;
+  --neutral-300: #bccde3;
+  --neutral-400: #8fa2bb;
+  --neutral-450: #6f8199;  /* control borders: 4.0:1 on white, 3.5:1 on pale blue */
+  --neutral-500: #5b6e88;
+  --neutral-600: #4c5f7d;
+  --neutral-700: #334561;
+  --neutral-800: #1c2b45;
+  --neutral-900: #0f1c30;
+  --neutral-950: #081426;
+
+  /* ---- Status ----------------------------------------------------------- */
+  --green-600: #17784a;
+  --green-700: #0f5c38;
+  --green-400: #45c98a;
+  --green-tint: #e2f4ec;
+  --red-600: #c4342a;
+  --red-700: #9c2820;
+  --red-400: #ff7a6e;
+  --red-tint: #fdeae8;
+  --amber-600: #91620a;
+  --amber-400: #e0a63c;
+  --amber-tint: #fcf1dd;
+
+  /* ======================= SEMANTIC TOKENS (light) =======================
+     Light mode is blue and white. */
+
+  /* Surfaces, from furthest back to nearest the user. The page itself is a
+     visible blue-white, so a white card reads as a raised object rather than
+     as a slightly different shade of the same nothing. */
+  --bg: var(--blue-50);
+  --surface: var(--neutral-0);
+  --surface-sunken: var(--blue-75);
+  --surface-raised: var(--neutral-0);
+  --surface-floating: var(--neutral-0);
+  --surface-inverse: var(--blue-800);
+
+  /* Structural blue. --surface-brand-subtle tints a large region (a filter
+     panel, a form header); --surface-brand is the definite one (selected rows,
+     highlighted regions); --surface-brand-strong is the most emphatic tint
+     that still carries body text at AA. */
+  --surface-brand-subtle: var(--blue-75);
+  --surface-brand: var(--blue-100);
+  --surface-brand-strong: #cadcfa;
+
+  /* Chrome. The app bar is deep navy in light mode — it is the single most
+     recognisable surface in the product, and a white bar on a white page is
+     not an identity. Content scrolls beneath it. */
+  --chrome: rgba(0, 20, 58, 0.82);
+  --chrome-scrolled: rgba(0, 16, 46, 0.93);
+  --chrome-solid: var(--blue-900);
+  --chrome-border: rgba(148, 190, 255, 0.26);
+  --chrome-fg: #ffffff;
+  --chrome-fg-muted: #b9cdf0;
+  --chrome-hover: rgba(255, 255, 255, 0.14);
+  --chrome-selected: rgba(122, 184, 255, 0.26);
+  --chrome-accent: var(--blue-300);
+  --chrome-blur: 24px;
+  --glass: rgba(255, 255, 255, 0.84);
+  --glass-border: rgba(0, 35, 102, 0.1);
+
+  /* Text. Even the neutrals are blue-black: a true grey next to #002366 reads
+     as a different, muddier family. */
+  --fg: var(--neutral-950);
+  --fg-secondary: var(--neutral-700);
+  --fg-muted: var(--neutral-600);
+  --fg-faint: var(--neutral-500);
+  --fg-on-brand: #ffffff;
+  /* Major titles and prices. Not the interaction blue — this is authority, and
+     an unclickable heading should not wear the colour of a link. */
+  --fg-display: var(--blue-800);
+
+  /* Lines. --border is decorative; --border-strong is the boundary of a
+     CONTROL, which WCAG 1.4.11 holds to 3:1, so it is a genuinely darker value
+     rather than one step up the same ramp. --brand-border is the blue edge used
+     where a region is brand-tinted. */
+  --border: var(--neutral-200);
+  --border-strong: var(--neutral-450);
+  --divider: var(--neutral-100);
+  --brand-border: var(--blue-150);
+  /* --brand-border-strong is the boundary of a CONTROL that sits on a tinted
+     ground (a filter chip, the save button, a checked segment), so it is held
+     to the same 3:1 as --border-strong rather than being the next pale step up
+     the ramp: 4.1:1 on white, 3.6:1 on pale blue, 3.3:1 on --surface-brand. */
+  --brand-border-strong: #3f7dd6;
+
+  /* Interactive */
+  --brand-deep: var(--blue-800);
+  --brand: var(--blue-600);
+  --brand-bright: var(--blue-550);
+  --brand-text: var(--blue-700);
+  --brand-hover: var(--blue-700);
+  --brand-active: var(--blue-800);
+  --brand-tint: var(--surface-brand);
+  --brand-tint-strong: var(--surface-brand-strong);
+  --brand-ink: var(--blue-800);
+  --focus-ring: var(--blue-600);
+
+  --success: var(--green-600);
+  --success-ink: var(--green-700);
+  --success-tint: var(--green-tint);
+  --danger: var(--red-600);
+  --danger-hover: var(--red-700);
+  --danger-tint: var(--red-tint);
+  --danger-fg: #ffffff;
+  --warning: var(--amber-600);
+  --warning-tint: var(--amber-tint);
+
+  --scrim: rgba(0, 12, 32, 0.52);
+  --skeleton: var(--blue-100);
+  --skeleton-sheen: var(--blue-75);
+
+  /* ---- Native controls --------------------------------------------------
+     A <select> is the one control whose popup is drawn by the OS, not by the
+     page. Chrome, Firefox and Safari each derive the popup's colours from some
+     mix of the element's own background-color, the inherited color, and the
+     computed color-scheme — and they do not agree. The only reliable fix is to
+     state all four values explicitly (control AND option, foreground AND
+     background) and never leave the select transparent.
+
+     These are separate from --surface/--fg so a themed region can never drag a
+     select's popup somewhere unreadable by inheritance. */
+  --control-bg: var(--neutral-0);
+  --control-fg: var(--neutral-950);
+  --control-placeholder: var(--neutral-500);
+  --control-disabled-bg: var(--blue-75);
+  --control-disabled-fg: var(--neutral-500);
+  --option-bg: var(--neutral-0);
+  --option-fg: var(--neutral-950);
+
+  /* Plates that sit ON a photograph. Identical in both themes: what is behind
+     them is the photo, not the page. */
+  --photo-plate: rgba(2, 10, 26, 0.66);
+  --photo-plate-brand: rgba(0, 35, 102, 0.82);
+  --photo-plate-border: rgba(255, 255, 255, 0.22);
+  --photo-fg: #ffffff;
+  --photo-fg-muted: rgba(255, 255, 255, 0.76);
+  --photo-scrim-top: rgba(0, 8, 22, 0.58);
+  --photo-scrim-bottom: rgba(0, 8, 22, 0.82);
+  --photo-fill: rgba(255, 255, 255, 0.12);
+  --photo-fill-hover: rgba(255, 255, 255, 0.2);
+  --photo-border: rgba(255, 255, 255, 0.24);
+  --photo-border-strong: rgba(255, 255, 255, 0.5);
+
+  /* ======================= TYPOGRAPHY ===================================
+     System font first: it already ships optical sizing, tracking tables and
+     legibility tuning, and costs no network request. Tracking is size-specific
+     — tight as text grows, neutral at body size. */
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text",
+    "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display",
+    "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", "Cascadia Mono",
+    Menlo, Consolas, monospace;
+
+  --text-display: clamp(2rem, 1.4rem + 2.4vw, 2.875rem);
+  --text-display-lh: 1.06;
+  --text-display-ls: -0.024em;
+
+  --text-title-1: clamp(1.5rem, 1.28rem + 0.9vw, 1.875rem);
+  --text-title-1-lh: 1.16;
+  --text-title-1-ls: -0.018em;
+
+  --text-title-2: 1.375rem;
+  --text-title-2-lh: 1.22;
+  --text-title-2-ls: -0.012em;
+
+  --text-title-3: 1.125rem;
+  --text-title-3-lh: 1.32;
+  --text-title-3-ls: -0.006em;
+
+  --text-body: 1rem;
+  --text-body-lh: 1.55;
+  --text-body-ls: 0em;
+
+  --text-body-sm: 0.9375rem;
+  --text-body-sm-lh: 1.5;
+  --text-body-sm-ls: 0.002em;
+
+  --text-label: 0.875rem;
+  --text-label-lh: 1.35;
+  --text-label-ls: 0.006em;
+
+  --text-caption: 0.8125rem;
+  --text-caption-lh: 1.4;
+  --text-caption-ls: 0.014em;
+
+  --text-overline: 0.75rem;
+  --text-overline-ls: 0.06em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ======================= SPACE (4px rhythm) =========================== */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-20: 5rem;
+
+  --gap-tight: var(--sp-3);
+  --gap: var(--sp-4);
+  --gap-loose: var(--sp-6);
+  --section: clamp(2rem, 4vw, 3.5rem);
+
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --measure: 68ch;
+  --container: 1240px;
+  --container-narrow: 460px;
+
+  --appbar-h: 56px;
+
+  /* ======================= RADII ======================================== */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --r-full: 999px;
+
+  /* ======================= ELEVATION ====================================
+     Shadows are tinted with the brand hue rather than pure black: a neutral
+     black shadow on a blue-white page reads as dirt. */
+  --shadow-1: 0 1px 2px rgba(3, 25, 66, 0.07), 0 1px 1px rgba(3, 25, 66, 0.05);
+  --shadow-2: 0 1px 2px rgba(3, 25, 66, 0.07), 0 4px 12px rgba(3, 25, 66, 0.09);
+  --shadow-3: 0 2px 4px rgba(3, 25, 66, 0.08), 0 12px 28px rgba(3, 25, 66, 0.12);
+  --shadow-4: 0 4px 8px rgba(3, 25, 66, 0.1), 0 28px 60px rgba(3, 25, 66, 0.2);
+  --shadow-focus: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 32%, transparent);
+
+  /* Top-edge highlight. On dark surfaces this does the work a drop shadow
+     cannot: it is the light catching the leading edge of a raised layer. */
+  --edge-light: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  /* ======================= MOTION ======================================= */
+  --dur-instant: 90ms;
+  --dur-fast: 140ms;
+  --dur: 220ms;
+  --dur-slow: 340ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.32, 0.62, 1);
+
+  /* ======================= LAYERS ======================================= */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-chrome: 40;
+  --z-overlay: 100;
+  --z-modal: 110;
+  --z-toast: 200;
+}
+
+/* ========================== SEMANTIC TOKENS (dark) =======================
+   Dark mode is navy-black and blue. Pure black survives only as the deepest
+   foundation behind everything; the canvas itself is #020713 and each surface
+   above it is a distinct blue-tinted step. Selected and highlighted states use
+   solid navy fills rather than low-alpha washes, which vanish on OLED.
+
+   Declared twice — once for the system preference, once for the explicit
+   override — because a stale copy would be invisible until someone toggled. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: var(--ink-975);
+    --surface: var(--ink-900);
+    --surface-sunken: var(--ink-950);
+    --surface-raised: var(--ink-800);
+    --surface-floating: var(--ink-700);
+    --surface-inverse: var(--blue-75);
+
+    --surface-brand-subtle: var(--navy-subtle);
+    --surface-brand: var(--navy);
+    --surface-brand-strong: var(--navy-strong);
+
+    --chrome: rgba(4, 12, 27, 0.84);
+    --chrome-scrolled: rgba(3, 9, 21, 0.94);
+    --chrome-solid: #050d1c;
+    --chrome-border: rgba(122, 184, 255, 0.2);
+    --chrome-fg: #edf3fb;
+    --chrome-fg-muted: #8ea6c6;
+    --chrome-hover: rgba(41, 151, 255, 0.18);
+    --chrome-selected: var(--navy-strong);
+    --chrome-accent: var(--blue-400);
+    --glass: rgba(12, 25, 43, 0.88);
+    --glass-border: rgba(122, 184, 255, 0.18);
+
+    --fg: #edf3fb;
+    --fg-secondary: #a8bbd4;
+    --fg-muted: #8ba0bd;
+    --fg-faint: #6c809e;
+    --fg-on-brand: var(--blue-950);
+    --fg-display: #edf3fb;
+
+    --border: #1e3557;
+    --border-strong: #4a6d9e;
+    --divider: #16273f;
+    --brand-border: #24456f;
+    --brand-border-strong: #4a7cbd;  /* 4.5:1 on surface, 3.0:1 on --surface-brand */
+
+    --brand-deep: var(--blue-300);
+    --brand: var(--blue-400);
+    --brand-bright: #4dabff;
+    --brand-text: var(--blue-300);
+    --brand-hover: #4dabff;
+    --brand-active: var(--blue-500);
+    --brand-tint: var(--navy);
+    --brand-tint-strong: var(--navy-strong);
+    --brand-ink: var(--blue-300);
+    --focus-ring: var(--blue-400);
+
+    --success: var(--green-400);
+    --success-ink: var(--green-400);
+    --success-tint: #0d2f22;
+    --danger: var(--red-400);
+    --danger-hover: #ff9a90;
+    --danger-tint: #37130f;
+    --danger-fg: #2b0703;
+    --warning: var(--amber-400);
+    --warning-tint: #33260e;
+
+    --scrim: rgba(0, 4, 12, 0.72);
+    --skeleton: var(--ink-800);
+    --skeleton-sheen: var(--ink-700);
+
+    --control-bg: var(--ink-800);
+    --control-fg: #edf3fb;
+    --control-placeholder: #8ba0bd;
+    --control-disabled-bg: var(--ink-900);
+    --control-disabled-fg: #8ba0bd;
+    --option-bg: var(--ink-800);
+    --option-fg: #edf3fb;
+
+    /* On near-black a drop shadow does almost nothing. Depth comes from the
+       surface step plus a hairline of blue light on the top edge. */
+    --edge-light: inset 0 1px 0 rgba(122, 184, 255, 0.14);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.6);
+    --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.5);
+    --shadow-3: 0 2px 4px rgba(0, 0, 0, 0.62), 0 12px 28px rgba(0, 0, 0, 0.55);
+    --shadow-4: 0 4px 8px rgba(0, 0, 0, 0.66), 0 28px 64px rgba(0, 0, 0, 0.72);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: var(--ink-975);
+  --surface: var(--ink-900);
+  --surface-sunken: var(--ink-950);
+  --surface-raised: var(--ink-800);
+  --surface-floating: var(--ink-700);
+  --surface-inverse: var(--blue-75);
+
+  --surface-brand-subtle: var(--navy-subtle);
+  --surface-brand: var(--navy);
+  --surface-brand-strong: var(--navy-strong);
+
+  --chrome: rgba(4, 12, 27, 0.84);
+  --chrome-scrolled: rgba(3, 9, 21, 0.94);
+  --chrome-solid: #050d1c;
+  --chrome-border: rgba(122, 184, 255, 0.2);
+  --chrome-fg: #edf3fb;
+  --chrome-fg-muted: #8ea6c6;
+  --chrome-hover: rgba(41, 151, 255, 0.18);
+  --chrome-selected: var(--navy-strong);
+  --chrome-accent: var(--blue-400);
+  --glass: rgba(12, 25, 43, 0.88);
+  --glass-border: rgba(122, 184, 255, 0.18);
+
+  --fg: #edf3fb;
+  --fg-secondary: #a8bbd4;
+  --fg-muted: #8ba0bd;
+  --fg-faint: #6c809e;
+  --fg-on-brand: var(--blue-950);
+  --fg-display: #edf3fb;
+
+  --border: #1e3557;
+  --border-strong: #4a6d9e;
+  --divider: #16273f;
+  --brand-border: #24456f;
+  --brand-border-strong: #4a7cbd;  /* 4.5:1 on surface, 3.0:1 on --surface-brand */
+
+  --brand-deep: var(--blue-300);
+  --brand: var(--blue-400);
+  --brand-bright: #4dabff;
+  --brand-text: var(--blue-300);
+  --brand-hover: #4dabff;
+  --brand-active: var(--blue-500);
+  --brand-tint: var(--navy);
+  --brand-tint-strong: var(--navy-strong);
+  --brand-ink: var(--blue-300);
+  --focus-ring: var(--blue-400);
+
+  --success: var(--green-400);
+  --success-ink: var(--green-400);
+  --success-tint: #0d2f22;
+  --danger: var(--red-400);
+  --danger-hover: #ff9a90;
+  --danger-tint: #37130f;
+  --danger-fg: #2b0703;
+  --warning: var(--amber-400);
+  --warning-tint: #33260e;
+
+  --scrim: rgba(0, 4, 12, 0.72);
+  --skeleton: var(--ink-800);
+  --skeleton-sheen: var(--ink-700);
+
+  --control-bg: var(--ink-800);
+  --control-fg: #edf3fb;
+  --control-placeholder: #8ba0bd;
+  --control-disabled-bg: var(--ink-900);
+  --control-disabled-fg: #8ba0bd;
+  --option-bg: var(--ink-800);
+  --option-fg: #edf3fb;
+
+  --edge-light: inset 0 1px 0 rgba(122, 184, 255, 0.14);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-2: 0 1px 2px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 2px 4px rgba(0, 0, 0, 0.62), 0 12px 28px rgba(0, 0, 0, 0.55);
+  --shadow-4: 0 4px 8px rgba(0, 0, 0, 0.66), 0 28px 64px rgba(0, 0, 0, 0.72);
+}
+
+/* The scrollbar, native popups and address bar follow the explicit choice too,
+   not only the system one. This is also half of the <select> fix: without it a
+   dark-themed page on a light OS hands the option popup to the light renderer
+   while the page paints light text into it. */
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
+
+/* ========================== ACCESSIBILITY OVERRIDES ====================== */
+
+/* Frostier, not blurrier: raise opacity and drop the blur entirely. */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --chrome: var(--chrome-solid);
+    --chrome-scrolled: var(--chrome-solid);
+    --glass: var(--surface);
+    --chrome-blur: 0px;
+  }
+}
+
+/* Near-solid surfaces with defined, contrasting borders. */
+@media (prefers-contrast: more) {
+  :root {
+    --border: var(--neutral-600);
+    --border-strong: var(--neutral-800);
+    --brand-border: var(--blue-700);
+    --fg-muted: var(--neutral-800);
+    --fg-faint: var(--neutral-700);
+    --brand-text: var(--blue-800);
+    --chrome: var(--chrome-solid);
+    --chrome-scrolled: var(--chrome-solid);
+    --glass: var(--surface);
+    --chrome-blur: 0px;
+    --shadow-focus: 0 0 0 3px var(--focus-ring);
+  }
+
+  :root[data-theme="dark"] {
+    --border: var(--blue-300);
+    --border-strong: var(--blue-200);
+    --brand-border: var(--blue-300);
+    --fg-muted: #dbe7f7;
+    --fg-faint: #c2d3ea;
+  }
+}
+
+/* The dark half has to be nested inside the colour-scheme query as well, or
+   `:not([data-theme="light"])` would repaint the LIGHT theme's borders for
+   every high-contrast user. */
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --border: var(--blue-300);
+    --border-strong: var(--blue-200);
+    --brand-border: var(--blue-300);
+    --fg-muted: #dbe7f7;
+    --fg-faint: #c2d3ea;
+  }
+}

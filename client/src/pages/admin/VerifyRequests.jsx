@@ -1,70 +1,104 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api, { errMsg, imageUrl } from '../../api/client';
-import AdminNavbar from './AdminNavbar.jsx';
+import AdminPage from './AdminPage.jsx';
+import Button from '../../components/ui/Button.jsx';
+import Icon from '../../components/ui/Icon.jsx';
 import '../../styles/all_verify.css';
 
-// all_verify.php — pending verification requests with Approve / Reject
+const COLUMNS = ['ID', 'Name', 'Email', 'Document', 'Decision'];
+
 export default function VerifyRequests() {
   const [requests, setRequests] = useState([]);
-  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [busyId, setBusyId] = useState(null);
+  const [toast, setToast] = useState('');
+  const [tone, setTone] = useState('success');
 
-  const load = () => api.get('/verifications/pending').then(({ data }) => setRequests(data.requests)).catch(() => {});
-  useEffect(() => { load(); }, []);
+  const load = () =>
+    api
+      .get('/verifications/pending')
+      .then(({ data }) => setRequests(data.requests))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+
+  useEffect(() => {
+    load();
+  }, []);
 
   async function act(id, action) {
+    setBusyId(`${id}:${action}`);
     try {
       const { data } = await api.put(`/verifications/${id}/${action}`);
-      setMessage(data.message);
+      setTone('success');
+      setToast(data.message);
       load();
     } catch (err) {
-      setMessage(errMsg(err));
+      setTone('error');
+      setToast(errMsg(err));
+    } finally {
+      setBusyId(null);
     }
   }
 
   return (
-    <div className="page-all-verify">
-      {message && (
-        <div style={{ padding: 15, backgroundColor: '#4caf50', color: 'white', borderRadius: 5, textAlign: 'center', marginBottom: 20 }}>
-          {message}
-        </div>
+    <AdminPage
+      title="Verification requests"
+      description="Open each document before deciding. Approving adds a verified badge to every listing that person publishes."
+      columns={COLUMNS}
+      rows={requests}
+      loading={loading}
+      emptyText="No requests are waiting for review."
+      toast={toast}
+      toastTone={tone}
+      onToastDismiss={() => setToast('')}
+      renderRow={(r) => (
+        <tr key={r.id}>
+          <td className="pf-table__id">{r.id.slice(-6)}</td>
+          <td>
+            <Link to={`/users/${r.user.id}`} className="pf-table__primary">
+              {r.user.firstname} {r.user.lastname}
+            </Link>
+          </td>
+          <td>{r.user.email}</td>
+          <td>
+            <a
+              className="admin__doc-link"
+              href={imageUrl(r.idDocumentPath)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Icon name="fileText" size={15} />
+              View document
+              <span className="pf-sr-only"> (opens in a new tab)</span>
+            </a>
+          </td>
+          <td>
+            <div className="pf-table__actions">
+              <Button
+                variant="primary"
+                size="sm"
+                icon="check"
+                loading={busyId === `${r.id}:approve`}
+                disabled={busyId?.startsWith(r.id)}
+                onClick={() => act(r.id, 'approve')}
+              >
+                Approve
+              </Button>
+              <Button
+                variant="danger-quiet"
+                size="sm"
+                icon="x"
+                loading={busyId === `${r.id}:reject`}
+                disabled={busyId?.startsWith(r.id)}
+                onClick={() => act(r.id, 'reject')}
+              >
+                Reject
+              </Button>
+            </div>
+          </td>
+        </tr>
       )}
-      <AdminNavbar />
-      <div className="content">
-        <table className="verification-table">
-          <thead>
-            <tr>
-              <th>Request ID</th><th>Full Name</th><th>Email</th><th>Document</th><th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.length ? requests.map((r) => (
-              <tr key={r.id}>
-                <td>{r.id.slice(-6)}</td>
-                <td>
-                  <div className="title">
-                    <Link to={`/users/${r.user.id}`} className="view-details-link">
-                      {r.user.firstname} {r.user.lastname}
-                    </Link>
-                  </div>
-                </td>
-                <td>{r.user.email}</td>
-                <td>
-                  <a href={imageUrl(r.idDocumentPath)} target="_blank" rel="noreferrer" style={{ color: 'blue' }}>
-                    View Document
-                  </a>
-                </td>
-                <td>
-                  <button className="approve-btn" style={{ backgroundColor: '#28a745' }} onClick={() => act(r.id, 'approve')}>Approve</button>
-                  <button className="reject-btn" style={{ backgroundColor: '#e74c3c' }} onClick={() => act(r.id, 'reject')}>Reject</button>
-                </td>
-              </tr>
-            )) : (
-              <tr><td colSpan="5" style={{ textAlign: 'center', padding: '40px 0', color: '#666' }}>No pending verification requests found</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    />
   );
 }

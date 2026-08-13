@@ -1,71 +1,132 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import api, { errMsg } from '../api/client';
-import { useAuth } from '../context/AuthContext.jsx';
+import { Link, useParams } from 'react-router-dom';
+import api, { errMsg, imageUrl } from '../api/client';
+import Navbar from '../components/Navbar.jsx';
 import PropertyGrid from '../components/PropertyGrid.jsx';
+import Button from '../components/ui/Button.jsx';
+import Icon from '../components/ui/Icon.jsx';
+import { EmptyState, Skeleton } from '../components/ui/Feedback.jsx';
+import SiteFooter from '../components/SiteFooter.jsx';
 import '../styles/user_details.css';
 
-// user_details.php — public owner profile with verified badge + their listings
+/* Public owner profile. Contact details are the reason anyone opens this page,
+   so they are actionable links rather than plain text. */
 export default function UserDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { user: me } = useAuth();
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    api.get(`/users/${id}`)
-      .then(({ data }) => setData(data))
-      .catch((err) => setError(errMsg(err, 'User not found.')));
+    let cancelled = false;
+    api
+      .get(`/users/${id}`)
+      .then((res) => {
+        if (!cancelled) setData(res.data);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(errMsg(err, 'We could not find that person.'));
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [id]);
-
-  if (error) return <p>{error}</p>;
-  if (!data) return null;
-  const { user, propertyCount, properties } = data;
 
   return (
     <div className="page-user-details">
-      <nav className="navbar">
-        <div className="navbar-container">
-          <button type="button" className="nav-button" id="all" onClick={() => navigate('/home')}>
-            <span style={{ color: 'white', textDecoration: 'none' }}>Home</span>
-          </button>
-          {me.role === 1 && (
-            <button type="button" className="nav-button" onClick={() => navigate('/admin')}>
-              <span style={{ color: 'white', textDecoration: 'none' }}>Admin</span>
-            </button>
+      <Navbar />
+
+      <main id="main" className="pf-below-appbar">
+        <div className="pf-container ud">
+          {error ? (
+            <EmptyState
+              icon="alertCircle"
+              title="Profile unavailable"
+              action={
+                <Button as={Link} to="/home" variant="primary" icon="arrowLeft">
+                  Back to browse
+                </Button>
+              }
+            >
+              {error}
+            </EmptyState>
+          ) : !data ? (
+            <div aria-busy="true">
+              <span className="pf-sr-only">Loading profile…</span>
+              <Skeleton height="9rem" radius="var(--r-lg)" />
+            </div>
+          ) : (
+            <>
+              <Link to="/home" className="ud__back">
+                <Icon name="arrowLeft" size={16} />
+                Back to browse
+              </Link>
+
+              <header className="ud__card pf-card">
+                <img
+                  className="ud__avatar"
+                  src={imageUrl(data.user.profile)}
+                  alt=""
+                  width="88"
+                  height="88"
+                />
+
+                <div className="ud__identity">
+                  <h1 className="ud__name">
+                    {data.user.firstname} {data.user.lastname}
+                    {data.user.verify === 1 && (
+                      <span className="pf-badge pf-badge--success ud__verified">
+                        <Icon name="badgeCheck" size={14} />
+                        Verified
+                      </span>
+                    )}
+                  </h1>
+                  <p className="pf-caption">
+                    {data.propertyCount} {data.propertyCount === 1 ? 'listing' : 'listings'} on
+                    PropertyFinder
+                  </p>
+                </div>
+
+                <dl className="ud__contact">
+                  <div>
+                    <dt>
+                      <Icon name="mail" size={15} />
+                      Email
+                    </dt>
+                    <dd>
+                      <a href={`mailto:${data.user.email}`}>{data.user.email}</a>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>
+                      <Icon name="phone" size={15} />
+                      Phone
+                    </dt>
+                    <dd>
+                      <a href={`tel:+961${data.user.number}`} className="pf-num">
+                        +961 {data.user.number}
+                      </a>
+                    </dd>
+                  </div>
+                </dl>
+              </header>
+
+              <section className="ud__listings">
+                <h2 className="pf-page-head__title">Listings</h2>
+                <PropertyGrid
+                  properties={data.properties}
+                  empty={
+                    <EmptyState icon="building" title="No listings yet">
+                      This person has not published anything at the moment.
+                    </EmptyState>
+                  }
+                />
+              </section>
+            </>
           )}
         </div>
-        <div className="logo">
-          <h2>Property<span className="yellow">Finder</span></h2>
-        </div>
-      </nav>
+      </main>
 
-      <div className="content">
-        <div className="top-section">
-          <div className="user-details">
-            <h2>User Details</h2>
-            <p>
-              <strong>Name:</strong> {user.firstname} {user.lastname}
-              {user.verify === 1 && (
-                <span className="verified-badge">
-                  <img src="/pictures/icons8-verified-badge-96.png" alt="Verified"
-                    style={{ width: 20, height: 20, verticalAlign: 'middle' }} />
-                </span>
-              )}
-            </p>
-            <p><strong>Properties Count:</strong> {propertyCount}</p>
-          </div>
-          <div className="contact-info">
-            <h2>Contact Info</h2>
-            <p><strong>Email:</strong>{user.email}</p>
-            <p><strong>Phone:</strong>{user.number}</p>
-          </div>
-        </div>
-
-        <h2>Apartments Uploaded</h2>
-        <PropertyGrid properties={properties} emptyText="No properties uploaded." />
-      </div>
+      <SiteFooter />
     </div>
   );
 }

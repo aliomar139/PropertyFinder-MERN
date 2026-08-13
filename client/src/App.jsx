@@ -38,11 +38,19 @@ function AdminOnly({ children }) {
   return user.role === 1 ? children : <Navigate to="/home" replace />;
 }
 
-// PHP did a full page load on every navigation, so each page started at the
-// top. SPA routing keeps the old scroll position — reset it on route change.
+// PHP did a full page load on every navigation, so each page started at the top
+// and the browser moved focus with it. SPA routing does neither: reset scroll,
+// and move focus to the new page's main region so a keyboard or screen-reader
+// user is not left pointing at a control that no longer exists.
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const main = document.getElementById('main') || document.querySelector('main');
+    if (!main) return;
+    if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+    main.focus({ preventScroll: true });
+  }, [pathname]);
   return null;
 }
 

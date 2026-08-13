@@ -1,29 +1,19 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import AppBar from '../../components/AppBar.jsx';
 
-// The Home/Admin navbar shared by the admin pages. Whole buttons navigate
-// (matches the click JS in admin.php).
+/* Admin navigation. The five admin destinations are listed here as well as on
+   the dashboard, so a deep admin page never traps you into going back twice. */
 export default function AdminNavbar() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const linkStyle = { color: 'white', textDecoration: 'none' };
-
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <button type="button" className="nav-button" onClick={() => navigate('/home')}>
-          <span style={linkStyle}>Home</span>
-        </button>
-        <button
-          type="button"
-          className={pathname.startsWith('/admin') ? 'nav-button active' : 'nav-button'}
-          onClick={() => navigate('/admin')}
-        >
-          <span style={linkStyle}>Admin</span>
-        </button>
-      </div>
-      <div className="logo">
-        <h2>Property<span className="yellow">Finder</span></h2>
-      </div>
-    </nav>
+    <AppBar
+      items={[
+        { to: '/home', label: 'Browse', icon: 'search' },
+        { to: '/admin', label: 'Overview', icon: 'shield', end: true },
+        { to: '/admin/users', label: 'Users', icon: 'users' },
+        { to: '/admin/properties', label: 'Listings', icon: 'building' },
+        { to: '/admin/verify-requests', label: 'Verification', icon: 'badgeCheck' },
+        { to: '/admin/reports', label: 'Reports', icon: 'flag' },
+        { to: '/admin/banned', label: 'Banned', icon: 'ban' }
+      ]}
+    />
   );
 }
