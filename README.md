@@ -1,37 +1,37 @@
 <div align="center">
 
-# 🏡 PropertyFinder
+# PropertyFinder
 
-**A full-stack real-estate listing platform — migrated from legacy PHP/MySQL to a modern MERN stack.**
+**A full-stack real-estate listing platform, rebuilt from a legacy PHP/MySQL app on the MERN stack.**
 
 Browse, list, and manage properties with authentication, favorites, reporting, owner verification, and a complete admin dashboard.
 
 <p>
-  <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white">
-  <img alt="Express" src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white">
-  <img alt="React" src="https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
-  <img alt="Node.js" src="https://img.shields.io/badge/Node.js_18+-339933?style=for-the-badge&logo=node.js&logoColor=white">
-  <img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">
+  <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white">
+  <img alt="Express" src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white">
+  <img alt="React" src="https://img.shields.io/badge/React_18-20232A?style=flat-square&logo=react&logoColor=61DAFB">
+  <img alt="Node.js" src="https://img.shields.io/badge/Node.js_18+-339933?style=flat-square&logo=node.js&logoColor=white">
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white">
 </p>
 
 </div>
 
 ---
 
-## ✨ Features
+## Features
 
 | | |
 |---|---|
-| 🔐 **Auth & Sessions** | JWT-based login/signup, password reset via email codes, account lockout after 5 failed attempts |
-| 🏘️ **Listings** | Create, edit, and delete properties with up to 6 photos each; rich filtering & sorting |
-| ❤️ **Favorites** | Save properties to a personal favorites list |
-| 🚩 **Reports** | Flag listings (one report per user per property) |
-| ✅ **Owner Verification** | Users submit ID documents; admins approve or reject requests |
-| 🛡️ **Admin Dashboard** | Manage users, ban/unban owners, moderate properties, handle reports & verifications |
+| **Auth & Sessions** | JWT-based login/signup, password reset via email codes, account lockout after 5 failed attempts |
+| **Listings** | Create, edit, and delete properties with up to 6 photos each; rich filtering & sorting |
+| **Favorites** | Save properties to a personal favorites list |
+| **Reports** | Flag listings (one report per user per property) |
+| **Owner Verification** | Users submit ID documents; admins approve or reject requests |
+| **Admin Dashboard** | Manage users, ban/unban owners, moderate properties, handle reports & verifications |
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -42,13 +42,13 @@ Browse, list, and manage properties with authentication, favorites, reporting, o
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 > **Prerequisites:** [Node.js 18+](https://nodejs.org) and a running [MongoDB](https://www.mongodb.com/try/download/community) instance (local or an [Atlas](https://www.mongodb.com/atlas) connection string).
 
 The app has **two parts** — the API (`server/`) and the web client (`client/`). Run each in its own terminal.
 
-### 1️⃣ Backend — API
+### 1. Backend — API
 
 ```bash
 cd server
@@ -59,7 +59,7 @@ npm run seed              # create an admin login for the admin dashboard
 npm run dev               # ▶ API running at http://localhost:5000
 ```
 
-### 2️⃣ Frontend — Web Client
+### 2. Frontend — Web Client
 
 ```bash
 cd client
@@ -67,7 +67,7 @@ npm install
 npm run dev               # ▶ App running at http://localhost:3000
 ```
 
-Open **http://localhost:3000** in your browser — you're ready to go. 🎉
+Open **http://localhost:3000** in your browser to open the app.
 
 **Default admin login** (created by `npm run seed`):
 
@@ -76,11 +76,11 @@ Email:    admin@propertyfinder.com
 Password: admin12345
 ```
 
-> 💡 **Demo data:** `npm run import-data` loads sample listings, users, and reports from `server/demo-data/` so the app looks populated out of the box. The bundled user passwords are hashed, so log in with the **seeded admin above** (or sign up for your own account) rather than the demo users.
+> **Demo data:** `npm run import-data` loads sample listings, users, and reports from `server/demo-data/` so the app looks populated out of the box. The bundled user passwords are hashed, so log in with the **seeded admin above** (or sign up for your own account) rather than the demo users.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 All backend settings live in `server/.env` (copied from `.env.example`):
 
@@ -96,7 +96,7 @@ All backend settings live in `server/.env` (copied from `.env.example`):
 
 ---
 
-## 📜 Available Scripts
+## Available Scripts
 
 **Server** (`cd server`)
 
@@ -118,7 +118,7 @@ All backend settings live in `server/.env` (copied from `.env.example`):
 | `npm run build` | Build the production bundle |
 | `npm run preview` | Preview the production build locally |
 
-### 🏭 Production
+### Production
 
 ```bash
 cd client && npm run build     # build the static frontend
@@ -127,7 +127,7 @@ cd ../server && npm start      # Express serves the API + built app on port 5000
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 mern/
@@ -157,7 +157,7 @@ mern/
 
 ---
 
-## 🗺️ Route & API Reference
+## Route & API Reference
 
 <details>
 <summary><strong>Legacy page → React route → API endpoint</strong> (click to expand)</summary>
@@ -192,7 +192,7 @@ mern/
 
 ---
 
-## 🔄 Migration Notes
+## Migration Notes
 
 <details>
 <summary><strong>Schema mapping (MySQL → MongoDB)</strong></summary>
